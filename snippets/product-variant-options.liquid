@@ -1,0 +1,122 @@
+{% comment %}
+  Renders product variant options
+  Accepts:
+  - product: {Object} product object.
+  - option: {Object} current product_option object.
+  - block: {Object} block object.
+  Usage:
+  {% render 'product-variant-options',
+    product: product,
+    option: option,
+    block: block
+  %}
+{% endcomment %}
+{%- liquid
+  assign variants_available_arr = product.variants | map: 'available'
+  assign variants_option1_arr = product.variants | map: 'option1'
+  assign variants_option2_arr = product.variants | map: 'option2'
+  assign variants_option3_arr = product.variants | map: 'option3'
+
+  assign product_form_id = 'product-form-' | append: section.id
+
+  assign option_type = option.name | split: "." | last | handle
+-%}
+
+{%- if option_type == 'taille' or option_type == 'montants' -%}
+  {% assign sorted_option_values = option.values %}
+{%- else -%}
+  {% assign sorted_option_values = option.values | sort_natural %}
+{%- endif -%}
+
+{%- liquid
+   if option_type == 'pointure' or option_type == 'taille'
+     assign option_type = 'size'
+   endif
+-%}
+
+{%- if block.settings.picker_type == 'button' -%}
+  <ul class="list-unstyled no-js-hidden ul-facets-type-{{ option_type }}" role="list">
+{%- endif -%}
+
+{%- for value in sorted_option_values -%}
+  {%- liquid
+    assign option_disabled = true
+
+    for option1_name in variants_option1_arr
+      case option.position
+        when 1
+          if variants_option1_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+            assign option_disabled = false
+          endif
+        when 2
+          if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+            assign option_disabled = false
+          endif
+        when 3
+          if option1_name == product.selected_or_first_available_variant.option1 and variants_option2_arr[forloop.index0] == product.selected_or_first_available_variant.option2 and variants_option3_arr[forloop.index0] == value and variants_available_arr[forloop.index0]
+            assign option_disabled = false
+          endif
+      endcase
+    endfor
+  -%}
+  
+  {%- if block.settings.picker_type == 'button' and template.suffix != 'espadrille-mariage' -%}
+    <li class="list-menu__item facets__item facet-type-{{ option_type }}">
+      <label for="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}" class="facet-checkbox">
+        <span class="visually-hidden">{{ 'products.product.variant_sold_out_or_unavailable' | t }}</span>
+        <input
+          type="radio"
+          id="{{ section.id }}-{{ option.position }}-{{ forloop.index0 }}"
+          name="{{ option.name }}"
+          value="{{ value | escape }}"
+          form="{{ product_form_id }}"
+          {% if option.selected_value == value %}
+            checked
+          {% endif %}
+          {% if option_disabled %}
+            class="disabled"
+          {% endif %}
+          autocomplete="off"
+          data-color="{{ value | handle }}"
+        >
+        {%- case option_type -%}
+          {%- when 'couleur' -%}
+            <span class="swatche-couleur swatche-couleur-{{ value | handle }}" data-color-spec="{% if value contains 'chiné' %}chine{% endif %}" aria-title="{{ value | escape }}" title="{{ value | escape }}" aria-hidden="true">
+              {% render 'icon-checkmark' %}
+            </span>
+            <span class="swatche-couleur-texte">{{ value | escape }}</span>
+          {%- when 'size' -%}
+            <span class="swatche-size" aria-title="{{ value | escape }}" title="{{ value | escape }}" data-size="{{ value | handle }}" aria-hidden="true">
+              {{ value | escape }}
+              <bas-button class="bas-button">{% render 'icon-enveloppe' %}</bas-button>
+            </span>
+          {%- when 'montants' -%}
+            <span class="swatche-montants" aria-title="{{ value | escape }}" title="{{ value | escape }}" data-size="{{ value | handle }}" aria-hidden="true">{{ value | escape }}</span>
+          {%- else -%}
+            <svg width="1.6rem" height="1.6rem" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+              <rect width="16" height="16" stroke="currentColor" fill="none" stroke-width="1"></rect>
+            </svg>
+            {% render 'icon-checkmark' %}
+            <span aria-hidden="true">{{ value | escape }}</span>
+        {%- endcase -%}
+      </label>
+    </li>
+  {%- elsif block.settings.picker_type == 'dropdown' and template.suffix != 'espadrille-mariage' -%}
+    <option
+      value="{{ value | escape }}"
+      {% if option.selected_value == value %}
+        selected="selected"
+      {% endif %}
+    >
+      {% if option_disabled -%}
+        {{- 'products.product.value_unavailable' | t: option_value: value -}}
+      {%- else -%}
+        {{- value -}}
+      {%- endif %}
+    </option>
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if block.settings.picker_type == 'button' -%}
+  </ul>
+{%- endif -%}

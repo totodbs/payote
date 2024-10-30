@@ -1,0 +1,175 @@
+{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+{% comment %}
+  Renders a product thumbnail with a modal-opener
+
+  Accepts:
+  - media: {Object} Product Media object
+  - media_count: {Number} Number of media objects
+  - position: {String} Position of the media. Used for accessible label.
+  - desktop_layout: {String} Layout of the media for desktop.
+  - mobile_layout: {String} Layout of the media for mobile.
+  - loop: {Boolean} Enable video looping (optional)
+  - modal_id: {String} The product modal that will be shown by clicking the thumbnail
+  - xr_button: {Boolean} Renders the "View in your space" button (shopify-xr-button) if the media is a 3D Model
+  - media_width: {Float} The width percentage that the media column occupies on desktop.
+  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+
+  Usage:
+  {% render 'product-thumbnail',
+    media: media,
+    position: forloop.index,
+    loop: section.settings.enable_video_looping,
+    modal_id: section.id
+  %}
+{% endcomment %}
+
+{%- liquid
+  unless lazy_load == false
+    assign lazy = 'lazy'
+  endunless
+
+  assign desktop_columns = 1
+  if desktop_layout == 'columns' and media_count > 1
+    assign desktop_columns = 2
+  endif
+
+  assign mobile_columns = 1
+  if mobile_layout == 'columns' and media_count > 1
+    assign mobile_columns = 2
+  endif
+-%}
+
+{%- capture sizes -%}
+  (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | times: media_width | divided_by: desktop_columns | round }}px, (min-width: 990px) calc({{ media_width | times: 100 | divided_by: desktop_columns }}vw - 10rem), (min-width: 750px) calc((100vw - 11.5rem) / 2), calc(100vw / {{ mobile_columns }} - 4rem)
+{%- endcapture -%}
+
+<modal-opener
+  class="swym product__modal-opener product__modal-opener--{{ media.media_type }} no-js-hidden"
+  data-modal="#ProductModal-{{ modal_id }}"
+>
+  {%- if media.media_type != 'video' -%}
+    <span class="product__media-icon motion-reduce quick-add-hidden" aria-hidden="true">
+      {%- liquid
+        case media.media_type
+          when 'model'
+            render 'icon-3d-model'
+          else
+            render 'icon-zoom'
+        endcase
+      -%}
+    </span>
+  {%- endif -%}
+
+  {%- if media.media_type == 'video' -%}
+    <div class="product__media media media--transparent gradient global-media-settings" style="padding-top: 100%;">
+      <deferred-media
+        class="deferred-media color-hover-media media media-video global-media-settings global-media-settings--no-shadow"
+        data-media-id="Color-{{ media.preview_image.id }}"
+        style="padding-top: 100%;"
+        data-media-id="{{ media.preview_image.id }}"
+      >
+        {{
+          media
+          | video_tag:
+            image_size: '2048px',
+            autoplay: true,
+            loop: true,
+            controls: false,
+            preload: 'none',
+            loading: 'lazy'
+        }}
+      </deferred-media>
+    </div>
+  {%- else -%}
+    <div class="product__media media media--transparent gradient global-media-settings" style="padding-top: 100%;">
+      <deferred-media
+        class="deferred-media color-hover-media media global-media-settings global-media-settings--no-shadow"
+        data-media-id="Color-{{ media.preview_image.id }}"
+        style="padding-top: 100%;"
+        data-media-id="{{ media.preview_image.id }}"
+      >
+        <img
+          data-srcset="{%- if media.preview_image.width >= 165 -%}{{ media.preview_image | image_url: width: 165 }} 165w,{%- endif -%}{%- if media.preview_image.width >= 360 -%}{{ media.preview_image | image_url: width: 360 }} 360w,{%- endif -%}{%- if media.preview_image.width >= 533 -%}{{ media.preview_image | image_url: width: 533 }} 533w,{%- endif -%}{%- if media.preview_image.width >= 720 -%}{{ media.preview_image | image_url: width: 720 }} 720w,{%- endif -%}{%- if media.preview_image.width >= 940 -%}{{ media.preview_image | image_url: width: 940 }} 940w,{%- endif -%}{%- if media.preview_image.width >= 1066 -%}{{ media.preview_image | image_url: width: 1066 }} 1066w,{%- endif -%}{{ media.preview_image | image_url }} {{ media.preview_image.width }}w"
+          data-src="{{ media.preview_image | image_url }}"
+          src="{{ settings.image_placeholder | image_url }}"
+          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px, (min-width: 990px) calc((100vw - 130px) / 4), (min-width: 750px) calc((100vw - 120px) / 3), calc((100vw - 35px) / 2)"
+          alt=""
+          class="motion-reduce"
+          width="{{ media.preview_image.width }}"
+          height="{{ media.preview_image.height }}"
+        >
+        {% if product.tags contains 'JO' %}<div class="survol-product"><img style="width: 60px;
+    position: absolute;
+    right: 10px;
+    top: 10px;" src="https://cdn.shopify.com/s/files/1/0636/1343/6089/files/jo2024.webp?v=1726240265"></div>{% endif %}
+                    {% if product.tags contains 'Paralympique' %}<div class="survol-product"><img style="width: 60px;
+    position: absolute;
+    right: 10px;
+    top: 10px;" src="https://cdn.shopify.com/s/files/1/0636/1343/6089/files/jo2024.webp?v=1726240265"></div>{% endif %}
+      </deferred-media>
+    </div>
+  {%- endif -%}
+  {%- if media.media_type != 'video' -%}
+    <button
+      class="product__media-toggle quick-add-hidden"
+      type="button"
+      aria-haspopup="dialog"
+      data-media-id="{{ media.id }}"
+    >
+      <span class="visually-hidden">
+        {{ 'products.product.media.open_media' | t: index: position }}
+      </span>
+    </button>
+  {%- endif -%}
+</modal-opener>
+
+{%- if media.media_type != 'image' -%}
+  {%- if media.media_type == 'model' -%}
+    <product-model
+      class="deferred-media media media--transparent gradient global-media-settings no-js-hidden"
+      style="padding-top: 100%"
+      data-media-id="{{ media.id }}"
+    >
+  {%- else -%}
+    <deferred-media
+      class="deferred-media gradient global-media-settings media no-js-hidden"
+      style="padding-top: 100%;"
+      data-media-id="{{ media.id }}"
+    >
+  {%- endif -%}
+  {%- liquid
+    case media.media_type
+      when 'external_video'
+        assign video_class = 'js-' | append: media.host
+        if media.host == 'youtube'
+          echo media | external_video_url: autoplay: true, loop: true, playlist: media.external_id | external_video_tag: class: video_class, loading: 'lazy'
+        else
+          echo media | external_video_url: autoplay: true, loop: true | external_video_tag: class: video_class, loading: 'lazy'
+        endif
+      when 'video'
+        echo media | media_tag: image_size: '2048px', autoplay: true, loop: true, controls: false, preload: 'none', loading: 'lazy'
+      when 'model'
+        echo media | media_tag: image_size: '2048px', toggleable: true
+    endcase
+  -%}
+
+  {%- if media.media_type == 'model' -%}
+    </product-model>
+    {%- if xr_button -%}
+      <button
+        class="button button--full-width product__xr-button"
+        type="button"
+        aria-label="{{ 'products.product.xr_button_label' | t }}"
+        data-shopify-xr
+        data-shopify-model3d-id="{{ media.id }}"
+        data-shopify-title="{{ product.title | escape }}"
+        data-shopify-xr-hidden
+      >
+        {% render 'icon-3d-model' %}
+        {{ 'products.product.xr_button' | t }}
+      </button>
+    {%- endif -%}
+  {%- else -%}
+    </deferred-media>
+  {%- endif -%}
+{%- endif -%}

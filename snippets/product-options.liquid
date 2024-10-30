@@ -1,0 +1,265 @@
+{% comment %}
+  Renders product options
+  Accepts:
+  - product: {Object} product object.
+  - product_form_id: {String} product form id.
+  - class: {String} Adds a class to the option wrapper element (optional).
+  Usage:
+  {% render 'product-options',
+    product: product
+    product_form_id: product_form_id
+  %}
+{% endcomment %}
+<style>
+  .custom_piede .option-group.parent-wrap .pplr-broderie{
+    display:none;
+  }
+  .custom_piede .option-group.parent-wrap .pplr-coup-de-spray{
+        width: 100%;
+  }
+  </style>
+<script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"
+></script>
+<script>
+  $(document).on('change','#Emplacement' ,function(){
+    var val = $('#Emplacement option:selected').val();
+    if ( val == "Côté" ){
+      $("#product-customization_id").addClass("custom_piede");
+    }
+    else{
+      $("#product-customization_id").removeClass("custom_piede");
+    }
+  });
+  $(".facet-type-size label.facet-checkbox .swatche-size").click(function(e){
+    var datasize = parseInt($(this).attr("data-size"));
+    console.log(datasize);
+    if( datasize >= 35 ){
+      $("#product-customization_id").removeClass("custom_piede");
+      $("#product-customization_id").addClass("custom_pied");
+    }
+    else{
+      $("#product-customization_id").removeClass("custom_pied");
+      $("#product-customization_id").addClass("custom_piede");
+    }
+  });
+    $(document).ready(function(){
+    $('.pplr_text').on('copy paste', function(e){
+      e.preventDefault();
+    });
+  });
+</script>
+{% assign variant = product.selected_or_first_available_variant.title %}
+<style>
+  #product-customization_id.custom_pied .Emplacement{display:block;}
+  .Emplacement{display:none;}
+</style>
+<div
+  id="product-customization_id"
+  class="
+    product-customization product-personalizer parent-display
+    {%- if class %} {{ class }}{% endif -%}
+    {%- if product.tags contains 'broderieespadrilles' or product.tags contains 'broderiesweat' or product.tags contains 'broderiemariage' or  product.tags contains 'broderiepied' %} broderie{% endif -%}
+    {%- if product.tags contains 'broderiesweat' %} broderie-sweat{% endif -%}
+    {%- if product.tags contains 'broderiesac' %} broderie-sac{% endif -%}
+ {%- if product.tags contains 'broderiepied'%}broderie-pied{% endif -%}
+    {%- if product.tags contains 'coupdespray' %} spray{% endif -%}
+    {% if variant contains '35'
+      or variant contains '36'
+      or variant contains '37'
+      or variant contains '38'
+      or variant contains '39'
+      or variant contains '40'
+      or variant contains '41'
+      or variant contains '42'
+      or variant contains '43'
+    %} custom_pied{% endif %}
+    {% if variant contains '28'
+      or variant contains '29'
+      or variant contains '30'
+      or variant contains '31'
+      or variant contains '32'
+      or variant contains '33'
+      or variant contains '34'
+    %} custom_piede{% endif %}
+  "
+>
+  {%- if product.tags contains 'broderieespadrilles'
+    or product.tags contains 'broderiesweat'
+    or product.tags contains 'broderiemariage'
+    or product.tags contains 'broderiesac'
+     or product.tags contains 'broderiepied'
+    or product.tags contains 'coupdespray'
+  -%}
+    {% liquid
+      assign broderie_product_id = 8153987547432
+      assign broderie_max_char = 6
+      assign broderie_elements = 'Pied Gauche,Pied Droit'
+      if product.tags contains 'broderiesweat'
+        assign broderie_variant_id = 44684598870312
+        assign broderie_max_char = 10
+        assign broderie_elements = 'Manche Gauche'
+      elsif product.tags contains 'broderiemariage'
+        assign broderie_variant_id = 44684749734184
+      elsif product.tags contains 'broderiesac'
+        assign broderie_variant_id = 44736681476392
+        assign broderie_elements = 'Sac'
+        assign broderie_max_char = 10
+        elsif product.tags contains 'broderiepied'
+        assign broderie_variant_id = 47892742406474
+        assign broderie_elements = 'Pied'
+        assign broderie_max_char = 6
+      else
+        assign broderie_variant_id = 44684598837544
+      endif
+      assign broderie_products = all_products['option-broderie']
+      for broderie_product in broderie_products.variants
+        if broderie_product.id == broderie_variant_id
+          assign bproduct = broderie_product
+        endif
+      endfor
+    %}
+    <product-option class="option-group parent-wrap">
+      {%- if product.tags contains 'broderieespadrilles'
+        or product.tags contains 'broderiesweat'
+        or product.tags contains 'broderiemariage'
+        or product.tags contains 'broderiesac'
+         or product.tags contains 'broderiepied'
+      -%}
+        <show-more-button class="option-button pplr-broderie pplr-wrapper">
+          <input
+            type="hidden"
+            name="options_id[{{ bproduct.id }}]"
+            value="{{ bproduct.id }}"
+            form="{{ product_form_id }}"
+            data-type="broderie"
+            data-price="{{ bproduct.price | money }}"
+          >
+          <input
+            type="checkbox"
+            class="pplrcheckbox hidden"
+            id="Broderie-{{ product.id }}"
+            name="product_options[{{ bproduct.id }}]"
+            value="1"
+            form="{{ product_form_id }}"
+            data-inputs="{{ broderie_elements }}"
+            data-for-product="{{ product.title }}"
+          >
+          <button class="button-show-more link no-js-hidden" id="Show-More-{{ bproduct.id }}" type="button">
+            <label class="pplrlabel" for="Broderie-{{ product.id }}">
+              {%- assign bopprice = bproduct.price | money_with_currency -%}
+              Broderie
+              {% if bproduct.price <= 0 -%}
+                ({{ 'products.product.price.free' | t }})
+              {%- else -%}
+                (+{{ bopprice }})
+              {%- endif %}
+            </label>
+          </button>
+        </show-more-button>
+      {%- endif -%}
+      {%- if product.tags contains 'coupdespray' -%}
+        {% liquid
+          assign spray_variant_id = 44738741797160
+          assign spray_products = all_products['option-spray']
+          for spray_product in spray_products.variants
+            if spray_product.id == spray_variant_id
+              assign spproduct = spray_product
+            endif
+          endfor
+        %}
+        <div class="option-button pplr-coup-de-spray pplr-wrapper">
+          <input
+            type="hidden"
+            name="options_id[{{ spproduct.id }}]"
+            value="{{ spproduct.id }}"
+            form="{{ product_form_id }}"
+            data-type="spray"
+            data-price="{{ spproduct.price | money }}"
+          >
+          <input
+            type="checkbox"
+            class="pplrcheckbox hidden"
+            id="CoupdeSpray-{{ product.id }}"
+            name="product_options[{{ spproduct.id }}]"
+            value="1"
+            form="{{ product_form_id }}"
+            data-for-product="{{ product.title }}"
+          >
+          <button class="link no-js-hidden" type="button">
+            <label class="pplrlabel" for="CoupdeSpray-{{ product.id }}">
+              {%- assign spopprice = spproduct.price | money_with_currency -%}
+              Coup de Spray
+              {% if spproduct.price <= 0 -%}
+                ({{ 'products.product.price.free' | t }})
+              {%- else -%}
+                (+{{ spopprice }})
+              {%- endif %}
+            </label>
+          </button>
+          <span class="pplr_ins">{{ spproduct.product.description }}</span>
+        </div>
+      {%- endif -%}
+      {%- if product.tags contains 'broderieespadrilles'
+        or product.tags contains 'broderiesweat'
+        or product.tags contains 'broderiemariage'
+        or product.tags contains 'broderiesac'
+         or product.tags contains 'broderiepied'
+      -%}
+        <div id="Details-option-content-{{ bproduct.id }}" data-option-ref="{{ bproduct.id }}" class="pplr-full">
+          <div class="product-option__content show-more-item hidden">
+            <div class="product-option__field pplr-wrapper pplr-dropdown pplr-couleur-du-fil">
+                        {%- if product.tags contains 'FFR' -%}
+              <p style="color:red"><strong>Sur ce modèle, la broderie se fait centrée au talon arrière sur la bande bleu, blanc, rouge. C’est pourquoi nous vous conseillons de choisir une couleur de fil comme doré, argenté ou noir pour que votre broderie se voit bien.</strong></p>
+                {%- endif -%}
+                <p>Pour les espadrilles personnalisées, il faut ajouter 7 jours ouvrés supplémentaires à la date de livraison estimée.</p>
+              
+              {%- if settings.broderie_colors != blank -%}
+                <label style="margin-top: 15px;" class="product-option__label">
+                  <span class="caption-with-space uppercase h5">Couleur du fil</span>
+                </label>
+                {% assign bcolors = settings.broderie_colors | split: ',' %}
+                <select class="pplr_select" name="product_options_properties[Couleur du fil]">
+                  {% for color in bcolors %}
+                    <option value="{{ color }}">{{ color }}</option>
+                  {% endfor %}
+                </select>
+              {%- endif -%}
+            </div>
+
+            {% assign binputs = broderie_elements | split: ',' %}
+            {% for input in binputs %}
+              <div class="product-option__field middle pplr-wrapper pplr-{{ input | handleize }}">
+                <label class="product-option__label pplrlabel" data-text="">
+                  <span class="caption-with-space uppercase h5">{{ input }}</span>
+                </label>
+                <input
+                  required=""
+                  type="text"
+                  class="pplr_text uppercase"
+                  value=""
+                  placeholder="Texte {{ input }}"
+                  name="product_options_properties[{{ input }}]"
+                  maxlength="{{ broderie_max_char }}"
+                  form="{{ product_form_id }}"
+                >
+              </div>
+            {% endfor %}
+            {% assign delay_base_min = product.metafields.custom.delay_min | default: 7 %}
+            {% assign delay_base_max = product.metafields.custom.delay_max | default: 10 %}
+            <div class="product-option__infos pplr-wrapper pplr-helper">
+              <p>{{- 'products.product.options.max_char' | t: max_char: broderie_max_char | escape -}}  La broderie se fait automatiquement en lettres bâton en majuscule (nous ne pouvons pas broder d'accent sur les lettres)</p>
+              <br>
+              <p class="caption-large delay">
+                {{ 'products.product.availability.delay_min_max' | t: min: delay_base_min, max: delay_base_max }}
+              </p>
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </product-option>
+  {%- endif -%}
+  <script src="{{ 'show-more.js' | asset_url }}" defer="defer"></script>
+</div>

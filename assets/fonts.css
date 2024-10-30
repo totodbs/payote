@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'Karla';
+    src: url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Karla-Regular.eot?v=1679431158');
+    src: url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Karla-Regular.eot?v=1679431158?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Karla-Regular.woff2?v=1679431158') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Karla-Regular.woff?v=1679431158') format('woff'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Karla-Regular.ttf?v=1679431147') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Light.eot?v=1676369162');
+    src: url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Light.eot?v=1676369162?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Light.woff2?v=1676369154') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Light.woff?v=1676369156') format('woff'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Light.ttf?v=1676369162') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Bold.eot?v=1676369162');
+    src: url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Bold.eot?v=1676369162?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Bold.woff2?v=1676369154') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Bold.woff?v=1676369157') format('woff'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Bold.ttf?v=1676369162') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Black.eot?v=1676369162');
+    src: url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Black.eot?v=1676369162?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Black.woff2?v=1676369153') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Black.woff?v=1676369155') format('woff'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Black.ttf?v=1676369162') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Rubik';
+    src: url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Medium.eot?v=1676369162');
+    src: url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Medium.eot?v=1676369162?#iefix') format('embedded-opentype'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Medium.woff2?v=1676369155') format('woff2'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Medium.woff?v=1676369158') format('woff'),
+        url('https://cdn.shopify.com/s/files/1/0636/1343/6089/files/Rubik-Medium.ttf?v=1676369162') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}

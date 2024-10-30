@@ -1,0 +1,79 @@
+{%- liquid
+   assign product = element 
+-%}
+<ul class="accordion__content-specs list-unstyled">
+{% if product.metafields.custom.madein != blank %}
+  <li class="product__specs-item grid grid--peek">
+    <h3 class="h4 accordion__subtitle grid__item">
+      Lieu de fabrication
+    </h3>
+    <p class="grid__item">
+      {{ product.metafields.custom.madein.value }}
+    </p>
+  </li>
+{% endif %}
+{% if product.metafields.custom.semelle_ext != blank %}
+  <li class="product__specs-item grid grid--peek">
+    <h3 class="h4 accordion__subtitle grid__item">
+      Semelle Extérieure
+    </h3>
+    <p class="grid__item">
+      {{ product.metafields.custom.semelle_ext.value }}
+    </p>
+  </li>
+{% endif %}
+{% if product.metafields.custom.semelle_int != blank %}
+  <li class="product__specs-item grid grid--peek">
+    <h3 class="h4 accordion__subtitle grid__item">
+      Semelle intérieure
+    </h3>
+    <p class="grid__item">
+      {{ product.metafields.custom.semelle_int.value }}
+    </p>
+  </li>
+{% endif %}
+{% if product.metafields.custom.toile != blank %}
+  <li class="product__specs-item grid grid--peek">
+    <h3 class="h4 accordion__subtitle grid__item">
+      Toile
+    </h3>
+    <p class="grid__item">
+      {{ product.metafields.custom.toile.value }}
+    </p>
+  </li>
+{% endif %}
+{% if product.metafields.custom.composition != blank %}
+  <li class="product__specs-item grid grid--peek">
+    <h3 class="h4 accordion__subtitle grid__item">
+      Composition
+    </h3>
+    <p class="grid__item">
+      {{ product.metafields.custom.composition.value }}
+    </p>
+  </li>
+{% endif %}
+{% if product.metafields.custom.genre != blank %}
+  <li class="product__specs-item grid grid--peek">
+    <h3 class="h4 accordion__subtitle grid__item">
+      Genre
+    </h3>
+    <p class="grid__item">
+      {% for genre in product.metafields.custom.genre.value %}
+        {{ genre }}{% unless genre == product.metafields.custom.genre.value.last %} {% endunless %}
+      {% endfor %}
+    </p>
+  </li>
+{% endif %}
+{% if product.metafields.custom.dimensions != blank %}
+  <li class="product__specs-item grid grid--peek">
+    <h3 class="h4 accordion__subtitle grid__item">
+      Dimensions
+    </h3>
+    <p class="grid__item">
+      {% for dimensions in product.metafields.custom.dimensions.value %}
+        {{ dimensions }}{% unless dimensions == product.metafields.custom.dimensions.value.last %} {% endunless %}
+      {% endfor %}
+    </p>
+  </li>
+{% endif %}
+</ul>

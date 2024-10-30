@@ -1,0 +1,86 @@
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  position: relative;
+}
+
+@media screen and (min-width: 750px) {
+  .newsletter-form {
+    align-items: flex-start;
+    margin: 0 auto;
+    max-width: 54rem;
+  }
+}
+.newsletter_already_subscribe{
+  color: red;
+}
+.newsletter-form__field-wrapper {
+  width: 100%;
+}
+
+.newsletter-form__field-wrapper .field__input {
+  padding-right: 5rem;
+  background-color: rgba(var(--color-base-background-1),.1);
+}
+
+.newsletter-form__field-wrapper .field:after {
+  box-shadow: 0 0 0 var(--inputs-border-width) rgba(var(--color-base-background-1),var(--inputs-border-opacity));
+}
+
+.newsletter-form__field-wrapper .field:hover.field:after {
+  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width)) rgba(var(--color-base-background-1),var(--inputs-border-opacity));
+}
+
+.newsletter-form__field-wrapper .field__input:focus {
+  box-shadow: 0 0 0 calc(0.1rem + var(--inputs-border-width)) rgba(var(--color-base-background-1));
+}
+
+.newsletter-form__field-wrapper .field {
+  z-index: 0;
+}
+
+.newsletter-form__message {
+  justify-content: center;
+  margin-bottom: 0;
+}
+
+.newsletter-form__message--success {
+  margin-top: 2rem;
+}
+
+@media screen and (min-width: 750px) {
+  .newsletter-form__message {
+    justify-content: flex-start;
+  }
+}
+
+.newsletter-form__button {
+  width: 4.4rem;
+  margin: 0;
+  right: var(--inputs-border-width);
+  top: var(--inputs-border-width);
+  height: calc(100% - var(--inputs-border-width) * 2);
+  z-index: 2;
+  background-color: rgba(var(--color-base-background-1),var(--inputs-border-opacity));
+  color: rgb(var(--color-background));
+  border-radius: 0 calc(var(--inputs-radius-outset) - var(--inputs-border-width)) calc(var(--inputs-radius-outset) - var(--inputs-border-width)) 0;
+}
+
+.newsletter-form__button:focus-visible {
+  background-color: rgba(var(--color-base-background-1),calc(var(--inputs-border-opacity) * 2));
+}
+.newsletter-form__field-wrapper .field__input:focus ~ .newsletter-form__button,
+.newsletter-form__button:focus {
+  background-color: rgba(var(--color-base-background-1),calc(var(--inputs-border-opacity) * 2));
+}
+
+.newsletter-form__button:not(:focus-visible):not(.focused) {
+  box-shadow: inherit;
+}
+
+.newsletter-form__button .icon {
+  width: 1.5rem;
+}

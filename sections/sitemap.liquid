@@ -1,0 +1,34 @@
+<div class="isolate page-width">
+  <h2 class="rich-text__heading rte">Collections</h2>
+  <ul class="rich-text__text rte">
+    {% for c in collections %}
+      <li>
+        <a href="{{ c.url }}">{{ c.title }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+  <h2 class="rich-text__heading rte">Produits</h2>
+  <ul class="rich-text__text rte">
+    {% for c in collections %}
+      <li>
+        <a href="{{ c.url }}">{{ c.title }}</a>
+        <ul class="rich-text__text rte">
+        {% for product in collections[c.handle].products %}
+          <li>
+            <a href="{{ product.url | within: c }}">{{ product.title }}</a>
+          </li>
+        {% endfor %}
+        </ul>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+{% schema %}
+  {
+    "name": "Sitemap",
+    "tag": "section",
+    "class": "section",
+    "settings": []
+  }
+{% endschema %}

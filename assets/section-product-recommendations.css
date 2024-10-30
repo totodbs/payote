@@ -1,0 +1,20 @@
+.product-recommendations {
+  display: block;
+}
+
+.product-recommendations__heading {
+  margin: 0 0 3rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 2.4rem;
+}
+
+.product-recommendations .card .swatche-size {
+  border: 0;
+  border-bottom: 0.1rem solid rgba(var(--color-foreground),.1);
+  border-right: 0.1rem solid rgba(var(--color-foreground),.1);
+}
+
+.product-recommendations .card .product__media-list deferred-media {
+  display: block;
+}

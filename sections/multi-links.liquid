@@ -1,0 +1,94 @@
+<style media="all">
+  .line {
+  	border-top: 1px solid {{ section.settings.bg-color }};
+  	padding-top:5px;
+  	padding-bottom: 5px;
+  	margin: 12px auto 0;
+  	width: 80%;
+  	position: relative;
+  }
+  
+  .line:before, .line:after {
+  	content: "";
+  	width: 10px;
+  	height: 10px;
+  	border: 1px solid {{ section.settings.bg-color }};
+    background-color: {{ section.settings.bg }};
+  	border-radius: 100px;
+  	position: absolute;
+  	top: -6px;
+  }
+  
+  .line:after {
+  	right: 0;
+  }
+  .title{
+    padding: 0px 10px;
+    color:{{ section.settings.text-color }};
+    text-decoration: auto;
+  }
+  .bg{
+    background: {{ section.settings.bg }};
+   padding: 30px;
+  }
+  @media only screen and (max-width: 768px) {
+    .line{
+      margin: 10px auto 0;
+    }
+  }
+</style>
+<div class="bg">
+  <div style="display: flex;max-width: max-content;margin: auto;" >
+    {%- for link in section.settings.menu.links -%}
+      <span ><a class="title" href="{{ link.url }}" {%- if link.current %}style="color:{{ section.settings.color }};font-weight:bold;"{% endif %}>{{ link.title }}</a></span>
+    {%- endfor -%} 
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "Custom Link",
+    "settings": [
+      {
+        "type":"color",
+        "id":"text-color",
+        "label":"Couleur texte",
+        "default":"#000"
+      },
+      {
+        "type":"color",
+        "id":"bg",
+        "label":"Couleur de fond",
+        "default":"#D3D3D3"
+      },
+      {
+        "type":"color",
+        "id":"bg-color",
+        "label":"Couleur des lignes",
+        "default":"#000"
+      },
+      {
+        "type":"color",
+        "id":"color",
+        "label":"Couleur du lien selectionné",
+        "default":"#0041FF"
+      }, 
+      {
+        "type": "link_list",
+        "id": "menu",
+        "default": "main-menu",
+        "label": "Navigation"
+      }
+    ],
+    "presets": [
+    {
+      "name": "Custom Link"
+    }
+  ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,316 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css">
+<style>
+   
+  #shopify-section-{{ section.id }} #collectslide130623xxx {
+      width: 100%;
+      height: auto;
+      padding: 0px 0px 30px 0px;
+      background-color: {{ section.settings.bg_color }};
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_container {
+      width: 100%;
+      padding: 0px 0;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_container p{margin:0px;}
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_heading {
+      color: {{ section.settings.heading_color }};
+      font-weight: 700;
+      font-size: calc(var(--font-subheading-scale) * 3rem);
+      margin:0px;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_link {
+      display: flex;
+      align-items: center;
+      color: {{ section.settings.link_color }};
+      font-size: 11px;
+      font-weight: 400;
+      line-height: normal !important;
+      text-transform: uppercase;
+      gap: 10px;
+      justify-content: center;
+      letter-spacing: 1.32px;
+      text-underline-offset: 5px;
+      text-decoration: underline !important;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_link:hover{
+      color: {{ section.settings.hover_link_color }};
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_link svg {
+      width: 30px;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_header {
+      max-width: 160rem;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 30px;
+      flex-direction: row;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .swiper {
+      width: 100%;
+      height: 100%;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_card {
+      display: block;
+      position: relative;
+      height: 350px;
+      border: 1px solid transparent;
+      overflow:hidden !important;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_card .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg,rgba(0,0,0,.452841),hsla(0,0%,100%,0));
+      transition: all .3s;
+      padding: 14px 0px 0px 8%;
+      max-width:92%;
+      color: {{ section.settings.text_color }};
+      font-size: 18px;
+      letter-spacing: .34px;
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 5px;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_card .overlay:hover {
+      opacity: .6 !important;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .mySwiper {
+      margin-top: 30px;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .swiper-button-prev {
+      display: none;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .swiper-button-next {
+      height: 50px !important;
+      width: 50px !important;
+      border-radius: 50%;
+      border: 1px solid {{ section.settings.text_color }};
+      color: {{ section.settings.text_color }} !important;
+      display: flex !important;
+      align-items: center !important;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .swiper-button-next::after {
+      content: '' !important;
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .swiper-button-next svg {
+      width: 30px;
+  }
+  @media only screen and (max-width: 780px)  {
+      #shopify-section-{{ section.id }} #collectslide130623xxx  .collectslide130623xxx_card .overlay {
+        font-size:14px;
+        padding: 10px 0px 0px 10%;
+        max-width: 90%;
+      }
+      #shopify-section-{{ section.id }} #collectslide130623xxx   .collectslide130623xxx_header {
+          justify-content: center;
+          padding: 0 20px;
+          flex-direction: column;
+          text-align: center;
+      }
+      #shopify-section-{{ section.id }} #collectslide130623xxx   .collectslide130623xxx_heading {
+          font-size: calc(var(--font-heading-scale) * 2.8rem);
+      }
+      #shopify-section-{{ section.id }} #collectslide130623xxx   .collectslide130623xxx_link {
+          font-size: 9px;
+          margin-top: 5px;
+      }
+      #shopify-section-{{ section.id }} #collectslide130623xxx   .collectslide130623xxx_link svg {
+          width: 25px;
+      }
+      #shopify-section-{{ section.id }} #collectslide130623xxx   .mySwiper {
+          margin-top: 20px;
+      }
+      #shopify-section-{{ section.id }} #collectslide130623xxx   .collectslide130623xxx_card {
+          height: 215px;
+      }
+      #shopify-section-{{ section.id }} #collectslide130623xxx  .swiper-button-next {
+          display: none !important;
+      }
+  }
+  #shopify-section-{{ section.id }} #collectslide130623xxx  .swiper-button-next {
+          display: none !important;
+      }
+</style>
+
+<section id="collectslide130623xxx">
+  <div class="collectslide130623xxx_container">
+    <div class="collectslide130623xxx_header">
+      <div class="collectslide130623xxx_header_left">
+        {% if section.settings.heading != blank %}
+          <h2 class="collectslide130623xxx_heading">{{ section.settings.heading }}</h2>
+        {% endif %}
+      </div>
+      <div class="collectslide130623xxx_header_right">
+        {% if section.settings.lbl_link != blank %}
+          <a href="{{ section.settings.url_link }}" class="collectslide130623xxx_link">
+            <span>{{ section.settings.lbl_link }}</span>
+            <span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+                class="w-6 h-6"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+              </svg>
+            </span>
+          </a>
+        {% endif %}
+      </div>
+    </div>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          <div class="swiper-slide" style="width:240px;!important">
+            <a href="{{ block.settings.url_link }}" class="collectslide130623xxx_card">
+              <img src="{{ block.settings.img_desc | image_url: width: 800 }}" alt="">
+              <div class="overlay">
+                <p>{{ block.settings.title }}</p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+      <div class="swiper-button-next">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
+        </svg>
+      </div>
+      <div class="swiper-button-prev"></div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<script>
+  var swiper = new Swiper(".mySwiper", {
+      loop: true,
+      navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+      },
+      breakpoints: {
+          320: {
+          slidesPerView: 2.5,
+          spaceBetween: 0
+          },
+          780: {
+          slidesPerView: 3.5,
+          spaceBetween: 0
+          },
+          1200: {
+          slidesPerView: 6,
+          spaceBetween: 0
+          },
+
+          1500: {
+          slidesPerView: 6,
+          spaceBetween: 0
+          }
+      }
+  });
+</script>
+{% schema %}
+{
+  "name": "Slide Collection",
+  "settings": [
+    {
+      "type":"color",
+      "id":"bg_color",
+      "label":"Couleur fond",
+      "default":"#fff"
+    },
+    {
+      "type":"color",
+      "id":"heading_color",
+      "label":"Couleur titre",
+      "default":"#202020"
+    },
+    {
+      "type":"color",
+      "id":"text_color",
+      "label":"Couleur texte",
+      "default":"#fff"
+    },
+    {
+      "type":"color",
+      "id":"link_color",
+      "label":"Couleur lien",
+      "default":"#202020"
+    },
+    {
+      "type":"color",
+      "id":"hover_link_color",
+      "label":"Couleur lien survol",
+      "default":"#202020"
+    },
+    {
+      "type":"text",
+      "id":"heading",
+      "label":"Titre",
+      "default":"Decouvrez nos categories"
+    },
+    {
+      "type":"text",
+      "id":"lbl_link",
+      "label":"Libelle Lien",
+      "default":"voir tout les produits"
+    },
+    {
+      "type":"url",
+      "id":"url_link",
+      "label":"URL Lien"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "featured_collection",
+      "name": "t:sections.collection-list.blocks.featured_collection.name",
+      "settings": [
+        {
+          "type": "url",
+          "id": "url_link",
+          "label": "t:sections.collection-list.blocks.featured_collection.settings.collection.label"
+        },
+        {
+          "type":"text",
+          "id":"title",
+          "label":"Titre",
+          "default":"Femme",
+          "info": "Ce titre devra suffir sur une ligne"
+        },
+        {
+      "type":"image_picker",
+      "id":"img_desc",
+      "label":"Image Descriptive"
+      }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Slide Collection"
+    }
+  ]
+}
+{% endschema %}

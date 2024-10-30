@@ -1,0 +1,28 @@
+{% comment %}
+    Renders a collection list
+
+    Accepts:
+    - list_collection: {Object} Collection Liquid object
+    - columns: {Number} 
+    - wrapper_class: {String} Wrapper class for list (optional)
+    - list_color_scheme: Color Scheme for buttons
+
+    Usage:
+    {% render 'list-collection' %}
+{% endcomment %}
+
+<div class="list-wrapper {% if wrapper_class and wrapper_class != 'none' %}{{ wrapper_class }}{% else %}collection-list-wrapper{% endif %}">
+  <div class="list list--text gradient">
+    <div class="list__content">
+      <div class="list__information">
+        <a{% if list_collection.url == blank %} role="link" aria-disabled="true"{% else %} href="{{ list_collection.url }}"{% endif %} class="button button--secondary color-{{ list_color_scheme }}">
+          {%- if list_collection.title != blank -%}
+            {{- list_collection.title | escape -}}
+          {%- else -%}
+            {{ 'onboarding.collection_title' | t }}
+          {%- endif -%}
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

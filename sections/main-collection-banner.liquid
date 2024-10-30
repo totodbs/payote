@@ -1,0 +1,150 @@
+{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
+{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+
+{%- if section.settings.collection_height == 'adapt_image' and collection.image -%}
+  {%- style -%}
+  @media screen and (max-width: 749px) {
+    #Collection-{{ section.id }}::before,
+    #Collection-{{ section.id }} .media::before,
+    #Collection-{{ section.id }}:not(.banner--mobile-bottom) .banner__content::before {
+      padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%;
+      content: '';
+      display: block;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    #Collection-{{ section.id }}::before,
+    #Collection-{{ section.id }} .media::before {
+      padding-bottom: {{ 1 | divided_by: section.blocks.first.settings.image.aspect_ratio | times: 100 }}%;
+      content: '';
+      display: block;
+    }
+  }
+  {%- endstyle -%}
+{%- endif -%}
+{%- if section.settings.show_collection_banner -%}
+  <div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% else %} page-width{% endif %} color-{{ section.settings.color_scheme }} gradient collection--{{ section.settings.collection_height }}">
+    <div id="Collection-{{ section.id }}" class="collection-hero__inner parent-display{% if collection.image == nil %} page-width{% endif %}">
+      {%- if section.settings.show_collection_image and collection.image -%}
+        <div class="collection-hero__image-container media gradient">      
+          <deferred-media class="deferred-media color-hover-media media" data-media-id="{{ collection.image.id }}">
+            <img data-srcset="{%- if collection.image.width >= 375 -%}{{ collection.image | image_url: width: 375 }} 375w,{%- endif -%}{%- if collection.image.width >= 550 -%}{{ collection.image | image_url: width: 550 }} 550w,{%- endif -%}{%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}{%- if collection.image.width >= 1100 -%}{{ collection.image | image_url: width: 1100 }} 1100w,{%- endif -%}{%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- endif -%}{%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- if collection.image.width >= 2000 -%}{{ collection.image | image_url: width: 2000 }} 2000w,{%- endif -%}{%- endif -%}{{ collection.image | image_url }} {{ collection.image.width }}w"" data-src="{{ collection.image | image_url }}" src="{{ collection.image | image_url: width: 375 }}" sizes="100vw" alt="" class="motion-reduce" {% unless lazy_load == false %} loading="lazy"{% endunless %} width="{{ collection.image.width }}" height="{{ collection.image.height }}">
+          </deferred-media>
+        </div>
+      {%- endif -%}
+      <div class="collection-hero__text-wrapper parent-wrap">
+        <div class="collection-hero__title">
+          <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
+          {%- if collection.image -%}
+            <h1 class="show-more-item">{{- collection.title | escape -}}</h1>
+          {%- else -%}
+            <h1 class="show-more-item">{% render 'title', element: collection %}</h1>
+          {%- endif -%}
+        </div>
+        <div id="Details-collection-content-{{ section.id }}" class="collection-hero__content">
+          <div class="collection-hero__title page-width--narrow show-more-item hidden">
+            {{- collection.title | escape -}}
+          </div>
+          <div class="collection-hero__description rte page-width--narrow show-more-item hidden">
+            {{ collection.description }}
+          </div>
+        </div>
+        {%- if section.settings.show_collection_description and collection.description != blank -%}
+          <show-more-button>
+            <button class="button-show-more link underlined-link no-js-hidden" id="Show-More-{{ section.id }}" type="button">
+              <span class="visually-hidden">{{ 'sections.collection_template.showmore' | t }}</span>
+              <span>
+                {% render 'icon-ellipsis' %}
+              </span>
+            </button>
+          </show-more-button>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "t:sections.main-collection-banner.name",
+  "class": "section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:sections.main-collection-banner.settings.paragraph.content"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_banner",
+      "default": true,
+      "label": "t:sections.main-collection-banner.settings.show_collection_banner.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "default": true,
+      "label": "t:sections.main-collection-banner.settings.show_collection_description.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "default": false,
+      "label": "t:sections.main-collection-banner.settings.show_collection_image.label",
+      "info": "t:sections.main-collection-banner.settings.show_collection_image.info"
+    },
+    {
+      "type": "select",
+      "id": "collection_height",
+      "options": [
+        {
+          "value": "adapt_image",
+          "label": "t:sections.main-collection-banner.settings.collection_height.options__1.label"
+        },
+        {
+          "value": "small",
+          "label": "t:sections.main-collection-banner.settings.collection_height.options__2.label"
+        },
+        {
+          "value": "medium",
+          "label": "t:sections.main-collection-banner.settings.collection_height.options__3.label"
+        },
+        {
+          "value": "large",
+          "label": "t:sections.main-collection-banner.settings.collection_height.options__4.label"
+        }
+      ],
+      "default": "adapt_image",
+      "label": "t:sections.main-collection-banner.settings.collection_height.label"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "options": [
+        {
+          "value": "accent-1",
+          "label": "t:sections.all.colors.accent_1.label"
+        },
+        {
+          "value": "accent-2",
+          "label": "t:sections.all.colors.accent_2.label"
+        },
+        {
+          "value": "background-1",
+          "label": "t:sections.all.colors.background_1.label"
+        },
+        {
+          "value": "background-2",
+          "label": "t:sections.all.colors.background_2.label"
+        },
+        {
+          "value": "inverse",
+          "label": "t:sections.all.colors.inverse.label"
+        }
+      ],
+      "default": "background-1",
+      "label": "t:sections.all.colors.label"
+    }
+  ]
+}
+{% endschema %}

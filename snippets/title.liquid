@@ -1,0 +1,61 @@
+<span class="custom-title">
+  {% if nocolor != true %}
+    {% if element %}
+      {% if element.metafields.custom.colored_title != blank %}
+        {%- capture title_part -%}
+          <span class="title-last-word">{{ element.metafields.custom.colored_title | metafield_text }}</span>
+        {%- endcapture -%}
+        {{ element.title | replace: element.metafields.custom.colored_title,  title_part }}
+      {% else %}
+        {% if element.title contains '| ' %}
+          {% assign title_parts = element.title | split: '| ' %}
+        {% else %}
+          {% assign title_parts = element.title | split: ' ' %}
+        {% endif %}
+        {% for word in title_parts %}
+          {% if word == title_parts.last %}
+            <span class="title-last-word">{{ word }}</span>
+          {% else %}
+            {{ word }}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% elsif colored_part and title %}
+      {%- capture title_part -%}
+        <span class="title-last-word">{{ colored_part }}</span>
+      {%- endcapture -%}
+      {{ title | replace: colored_part,  title_part }}
+    {% else %}
+      {% if title contains '| ' %}
+        {% assign title_parts = title | split: '| ' %}
+      {% else %}
+        {% assign title_parts = title | split: ' ' %}
+      {% endif %}
+      {% if title_parts.size > 2 %}
+        {% for word in title_parts %}
+          {% if forloop.index == 2 or forloop.index == 4 or forloop.index == 6 or forloop.index == 8 %}
+            <span class="title-last-word">
+          {% endif %}
+          {{ word }}
+          {% if forloop.index == 2 or forloop.index == 4 or forloop.index == 6 or forloop.index == 8 %}
+            </span>
+          {% endif %}
+        {% endfor %}
+      {% else %}
+        {% for word in title_parts %}
+          {% if word == title_parts.last %}
+            <span class="title-last-word">{{ word }}
+          {% else %}
+            {{ word }}
+          {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endif %}
+  {% else %}
+    {% if element %}
+      {{ element.title }}
+    {% else %}
+      {{ title }}
+    {% endif %}
+  {% endif %}
+</span>

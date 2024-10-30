@@ -1,0 +1,108 @@
+{% comment %}
+  Renders a product in cart drawer
+
+  Accepts:
+  - card_product: {Object} Product Liquid object (optional)
+  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+  - section_id: {String} The ID of the section that contains this card.
+  - show_atc: {Boolean} Show Add to cart button or just Link
+
+  Usage:
+  {% render 'cart-drawer-product' %}
+{% endcomment %}
+
+{%- if card_product and card_product != empty -%}
+  {%- liquid
+    assign ratio = 1
+  -%}
+  <div class="product product-cart-drawer-wrapper product-cart-drawer-wrapper">
+    <div
+      class="product-cart-drawer product-cart-drawer--media"
+      style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;"
+    >
+      <div class="product-cart-drawer__content">
+        <div class="product-cart-drawer__information">
+          <div class="product-cart-drawer-information product-cart-drawer-price-and-buy">
+            {%- if show_atc -%}
+              <product-form class="product-form">
+                {%- form 'product',
+                  card_product,
+                  id: product_form_id,
+                  class: 'form',
+                  novalidate: 'novalidate',
+                  data-type: 'add-to-cart-form'
+                -%}
+                  <input
+                    type="hidden"
+                    name="id"
+                    value="{{ card_product.selected_or_first_available_variant.id }}"
+                  >
+                  <details id="Details-CartDrawer">
+                    <summary
+                      class="cart-note__summary caption-large focus-offset"
+                      aria-label="{{ 'sections.cart.featured_products' | t }}"
+                    >
+                      <div>
+                        <span class="filter-label">{{ 'sections.cart.note' | t }}</span>
+                        {% render 'icon-caret' %}
+                      </div>
+                    </summary>
+                    <cart-note class="cart__note field">
+                      <textarea
+                        id="CartDrawer-Note"
+                        class="text-area text-area--resize-vertical field__input"
+                        name="properties[{{ 'sections.cart.note' | t }}]"
+                        placeholder="{{ 'sections.cart.note' | t }}"
+                      >{{ cart.note }}</textarea>
+                    </cart-note>
+                    <div style="padding:10px 0px;" class="product-form__buttons">
+                      <button
+                        type="submit"
+                        name="add"
+                        class="product-form__submit button button--full-width button--primary"
+                        {% if card_product.selected_or_first_available_variant.available == false %}
+                          disabled
+                        {% endif %}
+                      >
+                        <span class="icon">
+                          {% render 'icon-plus' %}
+                        </span>
+                        <span style="margin-left:5px;" class="">
+                          {%- if card_product.selected_or_first_available_variant.available -%}
+                            {{- 'products.product.add_to_cart' | t -}}
+                          {%- else -%}
+                            {{- 'products.product.sold_out' | t -}}
+                          {%- endif -%}
+                        </span>
+                        <div class="loading-overlay__spinner hidden">
+                          <svg
+                            aria-hidden="true"
+                            focusable="false"
+                            role="presentation"
+                            class="spinner"
+                            viewBox="0 0 66 66"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </details>
+                {%- endform -%}
+              </product-form>
+            {%- else -%}
+              <a href="{{ card_product.url }}" class="button full-unstyled-link">
+                {%- if card_product.title contains 'Espadrille' -%}
+                  {{ 'products.product.i_want_them' | t }}
+                {%- else -%}
+                  {{ 'products.product.i_want_it' | t }}
+                {%- endif -%}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

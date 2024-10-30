@@ -1,0 +1,97 @@
+{% comment %}
+  Renders a product in cart drawer
+
+  Accepts:
+  - card_product: {Object} Product Liquid object (optional)
+  - lazy_load: {Boolean} Image should be lazy loaded. Default: true (optional)
+  - section_id: {String} The ID of the section that contains this card.
+  - show_atc: {Boolean} Show Add to cart button or just Link
+
+  Usage:
+  {% render 'cart-drawer-product' %}
+{% endcomment %}
+
+{%- if card_product and card_product != empty -%}
+  {%- liquid
+    assign ratio = 1
+  -%}
+  <div class="product product-cart-drawer-wrapper product-cart-drawer-wrapper">
+    <div class="product-cart-drawer product-cart-drawer--media" style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+      <div class="product-cart-drawer__inner ratio" style="--ratio-percent: {{ 1 | divided_by: ratio | times: 100 }}%;">
+        <div class="product-cart-drawer__media">
+          <div class="media media--transparent" style="padding-top: 100%;">
+            {%- if card_product.featured_image -%}
+                <deferred-media class="deferred-media global-media-settings global-media-settings--no-shadow" data-media-id="Color-{{ card_product_media.id }}" data-media-id="{{ card_product_media.id }}">
+                  <img data-srcset="{%- if card_product.featured_image.width >= 165 -%}{{ card_product.featured_image | image_url: width: 165 }} 165w,{%- endif -%}{%- if card_product.featured_image.width >= 360 -%}{{ card_product.featured_image | image_url: width: 360 }} 360w,{%- endif -%}{{ card_product.featured_image | image_url }} {{ card_product.featured_image.width }}w" data-src="{{ card_product.featured_image | image_url }}" src="{{ settings.image_placeholder | image_url }}" sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 130 | divided_by: 4 }}px" alt="" class="motion-reduce" width="{{ card_product.featured_image.width }}" height="{{ card_product.featured_image.height }}">
+                </deferred-media>
+              {%- else -%}
+              <div class="media global-media-settings global-media-settings--no-shadow placeholder">
+                {{ 'lifestyle-2' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+      <div class="product-cart-drawer__content">
+        <div class="product-cart-drawer__information">
+          <div class="product-cart-drawer-information product-cart-drawer-price-and-buy">
+            <h3 class="product-cart-drawer__heading h5" id="title-{{ section_id }}-{{ card_product.id }}">
+              <a href="{{ card_product.url }}" id="CardLink-{{ section_id }}-{{ card_product.id }}" class="full-unstyled-link" aria-labelledby="CardLink-{{ section_id }}-{{ card_product.id }} Badge-{{ section_id }}-{{ card_product.id }}">
+                {{ card_product.title | escape }}
+              </a>
+              {%- if show_atc == true -%}
+                {% render 'price', product: card_product, price_class: '' %}
+              {%- endif -%}
+            </h3>
+            {%- if show_atc -%}
+              <product-form class="product-form">
+                {%- form 'product', card_product, id: product_form_id, class: 'form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+                  <input
+                    type="hidden"
+                    name="id"
+                    value="{{ card_product.selected_or_first_available_variant.id }}"
+                  >
+                  <div class="product-form__buttons">
+                    <button
+                      type="submit"
+                      name="add"
+                      class="product-form__submit button button--full-width button--primary"
+                      {% if card_product.selected_or_first_available_variant.available == false %}
+                        disabled
+                      {% endif %}
+                    >
+                      <span class="visually-hidden">{% if card_product.selected_or_first_available_variant.available %}{{ 'products.product.add_to_cart' | t }}{% else %}{{ 'products.product.sold_out' | t }}{% endif %}</span>
+                      <span class="icon">
+                        {% render 'icon-plus' %}
+                      </span>
+                      <div class="loading-overlay__spinner hidden">
+                        <svg
+                          aria-hidden="true"
+                          focusable="false"
+                          role="presentation"
+                          class="spinner"
+                          viewBox="0 0 66 66"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <circle class="path" fill="none" stroke-width="6" cx="33" cy="33" r="30"></circle>
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                {%- endform -%}
+              </product-form>
+            {%- else -%}
+              <a href="{{ card_product.url }}" class="button full-unstyled-link">
+                {%- if card_product.title contains "Espadrille" -%}
+                  {{ 'products.product.i_want_them' | t }}
+                {%- else -%}
+                  {{ 'products.product.i_want_it' | t }}
+                {%- endif  -%}
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

@@ -1,0 +1,41 @@
+<!-- Custom Code to Add Wishlist behind Login. -->
+<script defer>
+  function swymCallbackFn(swat) {
+    var isLoggedIn;
+    {% if customer %}
+    isLoggedIn = true;
+    {% else %}
+    isLoggedIn = false;
+    {% endif %}
+    if (isLoggedIn == false) {
+      SwymUtils.getHostedURL = function() {
+        /*    	Navigate to login page on click of swym-icons for wishlist page.*/
+        return "/account/login";
+      }
+      //       Override launchpoints.
+      swat.ui.open = function(){
+        console.log("Not Logged IN!");
+        swymRedirectToLogin();
+      }
+      //       Override default API implementations.
+      swat.api.addToWishList = function(){
+        console.log("Not Logged IN!");
+        swymRedirectToLogin();
+      }
+
+//       Override API for Pop-up
+      swat.ui.uiRef.addToWishlist =function(){
+        console.log("Not Logged IN!");
+        swymRedirectToLogin();
+      }
+    }
+    function swymRedirectToLogin(customURL){
+      var accountsPageURL = customURL || window.origin + "/account/login";
+      window.location = accountsPageURL;
+    }
+  }
+  if (!window.SwymCallbacks) {
+    window.SwymCallbacks = [];
+  }
+  window.SwymCallbacks.push(swymCallbackFn);
+</script>

@@ -1,0 +1,293 @@
+.mega-menu {
+  position: static;
+}
+
+.mega-menu__content {
+  background-color: rgb(var(--color-background));
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;  
+  left: 0;
+  overflow-y: auto;
+  padding-bottom: 2.4rem;
+  padding-top: 2.4rem;
+  position: absolute;
+  right: 0;
+  top: 100%;
+  z-index: -1;
+}
+
+.shopify-section-header-sticky .mega-menu__content {
+  max-height: calc(107vh - var(--header-bottom-position-desktop, 20rem) - 4rem);
+}
+
+.header-wrapper--border-bottom .mega-menu__content {
+  border-top: 0;
+}
+
+.js .mega-menu__content {
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility var(--duration-default) var(--duration-default) ease, opacity var(--duration-default) var(--duration-default) ease;
+}
+
+.mega-menu[open] .mega-menu__content {
+  opacity: 1;
+  transform: translateY(0);
+  visibility: visible;
+  z-index: 2;
+}
+
+.mega-menu__list {
+  display: grid;
+  gap: 2.4rem;
+  list-style: none;
+  grid-auto-flow: column;
+  grid-template-columns: repeat(auto-fit,calc(calc(100%/7) - 2.4rem));
+  justify-content: center;
+}
+
+.link-femme .link-espadrilles,
+.link-homme .link-espadrilles {
+  grid-column: span 2;
+}
+
+.link-femme .link-espadrilles .childlinks,
+.link-homme .link-espadrilles .childlinks {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  max-height: 21rem;
+}
+
+.link-femme .link-espadrilles .childlinks li,
+.link-homme .link-espadrilles .childlinks li {
+  width: 50%;
+  max-width: 17rem;
+}
+
+.mega-menu__link {
+  color: rgb(var(--color-foreground));
+  display: block;
+  font-size: 1.3rem;
+  line-height: calc(1 + 0.3 / var(--font-body-scale));
+  padding-bottom: 0.6rem;
+  padding-top: 0.6rem;
+  text-decoration: none;
+  transition: text-decoration var(--duration-short) ease;
+  word-wrap: break-word;
+  position: relative;
+  text-transform: uppercase;
+  font-family: var(--font-body-family);
+  font-weight: var(--font-body-weight);
+}
+
+.link-nouveautes .mega-menu__link {
+  color: rgba(var(--color-base-accent-2),.7);
+  font-style: italic;
+  font-weight: 900;
+}
+
+.mega-menu__link--level-2 {
+  font-size: 1.4rem;
+  font-family: var(--font-subheading-family);
+  font-weight: var(--font-subheading-weight);
+}
+
+.mega-menu__link--level-2:not(:only-child) {
+  margin-bottom: 0.8rem;
+}
+
+a.mega-menu__link.link.see-all {
+    text-transform: initial;
+    font-weight: 600;
+    color: rgba(var(--color-base-accent-2),.7)
+}
+
+.header--top-center .mega-menu__list {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 0;
+}
+
+.header--top-center .mega-menu__list > li {
+  width: 16%;
+  padding-right: 2.4rem;
+}
+
+.mega-menu__item {
+  width: 100%;
+}
+
+.mega-menu-card {
+  width: 100%;
+  position: relative;
+  padding-top: 100%;
+  border-radius: var(--media-radius);
+  overflow: hidden;
+  transition: transform var(--duration-long) ease;
+}
+
+.mega-menu-card .mega-menu-card__image-wrapper,
+.mega-menu-card .mega-menu-card__info {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.mega-menu-card__image-wrapper .media {
+  width: 100%;
+  height: 100%;
+  transition: filter var(--duration-long) ease;
+}
+
+.mega-menu-card .mega-menu-card__info {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.mega-menu-card__info .link:first-child {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: calc(var(--grid-desktop-vertical-spacing) / 2) calc(var(--grid-desktop-horizontal-spacing) / 2);
+}
+
+.link-cest-quoi-payote .mega-menu-card__info .link:first-child {
+  align-items: flex-end;
+}
+
+.mega-menu-card__info-wrapper {
+  text-align: center;
+  width: calc(100% - calc(1.5rem * 2));
+}
+
+.mega-menu-card__info h3,
+.mega-menu-card__info .rte,
+.mega-menu-card__info .link {
+  color: rgb(var(--color-base-solid-button-labels));
+  text-decoration: none;
+  line-height: 1.2;
+}
+
+.mega-menu-card__info h3 {
+  font-family: var(--font-heading-family);
+  text-transform: uppercase;
+  font-weight: var(--font-heading-weight);
+  font-size: calc(var(--font-subheading-scale) * 1.8rem);
+  align-items: center;
+  display: flex;
+  height: 2em;
+  word-break: initial;
+}
+
+.mega-menu-card__info .rte p {
+  line-height: 1;
+  margin: 0;
+}
+
+.mega-menu__link:hover,
+.mega-menu__link--active {
+  color: rgb(var(--color-foreground));
+  text-decoration: underline;
+}
+
+.mega-menu__link--active:hover {
+  text-decoration-thickness: 0.2rem;
+}
+
+.mega-menu-card:hover {
+  transform: scale(.95);
+}
+
+.mega-menu-card .media {
+  filter: brightness(.9);
+  border-radius: var(--media-radius);
+  overflow: hidden;
+}
+
+.mega-menu .mega-menu__list--condensed {
+  display: block;
+}
+
+.mega-menu__list--condensed .mega-menu__link {
+  font-weight: normal;
+}
+
+header-menu:hover .mega-menu__content,
+header-menu:focus-within .mega-menu__content {
+  visibility: visible;
+  opacity: 1;
+  transition: visibility var(--duration-default) ease, opacity var(--duration-default) ease;
+  z-index: 2;
+}
+
+@media screen and (max-width: 749px) {
+  .mega-menu-card__info .link:first-child {
+    padding: var(--grid-mobile-vertical-spacing) var(--grid-mobile-horizontal-spacing);
+  }
+}
+
+@media screen and (max-width: 990px) {
+  .menu-drawer__navigation > .menu-drawer__menu {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+  }
+  
+  .menu-drawer__menu {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    list-style: none;
+  }
+  
+  .menu-drawer__subsubmenu {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-gap: 0;
+  }
+
+  .menu-drawer__menu > li {
+    width: 100%;
+  }
+
+  .mega-menu__item {
+    align-self: flex-end;
+            padding: 5px 10px;
+        font-weight: bold;
+  }
+
+  .drawer-subemnu-link + .mega-menu__item {
+    margin-top: 2rem;
+  }
+  
+  .mega-menu-card {
+    padding-top: 40%;
+  }
+  
+  .link-personnalisez .mega-menu-card {
+    padding-top: 70%;
+  }
+  .link-cest-quoi-payote .mega-menu-card {
+    padding-top: 70%;
+  }
+  .link-personnalisez .mega-menu-card__info h3 {
+    font-size: calc(1 + .4 * var(--font-heading-scale))rem;
+  }
+  .link-cest-quoi-payote .mega-menu-card__info h3 {
+    font-size: calc(1 + .4 * var(--font-heading-scale))rem;
+  }
+}
+.link-soldes a,
+.link-soldes a:hover{
+  color:red;
+}

@@ -1,0 +1,72 @@
+product-option {
+  grid-area: 1/1/8/8;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.pplr-full {
+  width: 100%;
+}
+
+.pplr-wrapper {
+  position: relative;
+}
+
+.option-button button {
+  width: 100%;
+}
+
+product-option .pplr_select {
+  width: 100%;
+}
+
+.product-option__label {
+  width: 100%;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.product-option__content {
+  display: grid;
+  grid-gap: 0;
+  grid-template-areas: "a1 b1" "a2 b2" "a3 b3" "a4 b4" "a5 b5";
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: auto;
+}
+
+.option-button.checked button {
+  color: rgb(var(--color-base-solid-button-labels));
+}
+
+.product-personalizer.broderie-sac .option-button,
+.product-personalizer.broderie:not(.spray) .option-button {
+  width: 100%;
+  margin-right: 0;
+}
+
+.product-personalizer.spray:not(.broderie) .option-button {
+  width: 100%;
+  margin-left: 0;
+}
+
+.product-personalizer.broderie.spray .option-button {
+  width: calc(50% - .5em);
+}
+
+product-option .pplr-option-broderie,
+product-option .pplr-broderie,
+product-option .pplr-coup-de-spray {
+  padding: 1rem;
+}
+
+product-option .pplr-option-broderie .link,
+product-option .pplr-broderie .link,
+product-option .pplr-coup-de-spray .link {
+  text-decoration: none;
+}
+
+product-option .pplr-option-broderie .pplrlabel,
+product-option .pplr-broderie .pplrlabel,
+product-option .pplr-coup-de-spray .pplrlabel {
+  width: 100%;
+}

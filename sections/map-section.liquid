@@ -1,0 +1,1195 @@
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/handlebars/4.7.7/handlebars.min.js"></script>
+<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<style>
+  .btnMapAction {
+      color: #000000 !important;
+      font-weight: 850;
+      font-size: 12px;
+      text-transform: uppercase;
+      line-height: 15px;
+      text-align: center;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #000000;
+      background-color: transparent;
+      outline: none;
+      width: 100%;
+      cursor: pointer;
+      transition: all 500ms;
+      overflow: hidden;
+      height: 40px;
+      opacity: 1;
+      visibility: visible;
+      position: relative;
+      transition: opacity 500ms;
+    margin-bottom: 3px;
+  }
+  
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  @media only screen and (min-width: 890px){
+   #shopify-section-{{ section.id }} #avis200223{
+      margin-top:120px!important;
+    }
+  }
+  #shopify-section-{{ section.id }} {
+    margin: 40px;
+  }
+   @media only screen and (min-width: 890px){
+  #map-container {
+    height: 760px!important;
+    margin-top: 40px!important;
+  }}
+  #map-container {
+    width: 100%;
+    height: 500px;
+    margin: auto;
+    //max-width: 1400px;
+    position: relative;
+    font-family: "Roboto", sans-serif;
+    box-sizing: border-box;
+  }
+
+  #map-container a {
+    text-decoration: none;
+    color: #1967d2;
+  }
+
+  #map-container button {
+
+  }
+
+  #gmp-map {
+    position: absolute;
+    left: 22em;
+    top: 0;
+    right: 0;
+    bottom: 0;
+  }
+@media only screen and (min-width: 890px){
+  #locations-panel {
+    height:760px!important}
+}
+@media only screen and (max-width: 890px){
+#map-container{
+  height:730px!important
+}
+  #gmp-map{
+    height: 320px!important;
+  }
+  #locations-panel {
+    height:720px!important}
+}
+
+  
+  #locations-panel {
+    position: absolute;
+    left: 0;
+    width: 22em;
+    height: 500px;
+    top: 0;
+    bottom: 0;
+    overflow-y: auto;
+    background: white;
+    padding: 0.5em;
+    box-sizing: border-box;
+  }
+
+  @media only screen and (max-width: 876px) {
+    {% if template == 'index' %}
+    #shopify-section-{{ section.id }} {
+      display:none !important;
+    }
+    {% endif %}
+    #shopify-section-{{ section.id }} {
+      margin: 20px;
+    }
+    #gmp-map {
+      left: 0;
+      bottom: 50%;
+    }
+
+    #locations-panel {
+      top: 50%;
+      right: 0;
+      width: unset;
+    }
+  }
+
+  #locations-panel-list > header {
+    padding: 0 1.4em 0 1.4em;
+  }
+
+  #locations-panel-list h1.search-title {
+    font-size: 1em;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  #locations-panel-list h1.search-title > img {
+    vertical-align: bottom;
+    margin-top: -1em;
+  }
+
+  #locations-panel-list .search-input {
+    width: 100%;
+    position: relative;
+  }
+
+  #locations-panel-list .search-input input {
+    width: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 0.3em;
+    height: 2.2em;
+    box-sizing: border-box;
+    padding: 0 2.5em 0 1em;
+    font-size: 1em;
+  }
+
+  #locations-panel-list .search-input-overlay {
+    position: absolute;
+  }
+
+  #locations-panel-list .search-input-overlay.search {
+    right: 2px;
+    top: 2px;
+    bottom: 2px;
+    width: 2.4em;
+  }
+
+  #locations-panel-list .search-input-overlay.search button {
+    width: 100%;
+    height: 100%;
+    border-radius: 0.2em;
+    color: black;
+    background: transparent;
+  }
+
+  #locations-panel-list .search-input-overlay.search .icon {
+    margin-top: 0.05em;
+    vertical-align: top;
+  }
+
+  #locations-panel-list .section-name {
+    font-weight: 500;
+    font-size: 0.9em;
+    margin: 1.8em 0 1em 1.5em;
+  }
+
+  #locations-panel-list .location-result {
+    position: relative;
+    padding: 0.8em 3.5em 0.8em 1.4em;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+    cursor: pointer;
+  }
+
+  #locations-panel-list .location-result:first-of-type {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+  }
+
+  #locations-panel-list .location-result:last-of-type {
+    border-bottom: none;
+  }
+
+  #locations-panel-list button.select-location {
+    margin-bottom: 0.6em;
+    text-align: left;
+  }
+
+  #locations-panel-list .location-result h2.name {
+    font-size: 1em;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  #locations-panel-list .location-result .address {
+    font-size: 0.9em;
+    margin-bottom: 0.5em;
+  }
+
+  #locations-panel-list .directions-button {
+    position: absolute;
+    right: 1.2em;
+    top: 2.3em;
+  }
+
+  #locations-panel-list .directions-button-background:hover {
+    fill: rgba(116,120,127,0.1);
+  }
+
+  #locations-panel-list .directions-button-background {
+    fill: rgba(255,255,255,0.01);
+  }
+
+  #locations-panel-list .location-result .distance {
+    position: absolute;
+    top: 0.9em;
+    right: 0;
+    text-align: center;
+    font-size: 0.9em;
+    width: 5em;
+  }
+
+  #locations-panel-list .option-container {
+    display: inline-block;
+    margin: 0.2em 0;
+    position: relative;
+  }
+
+  #locations-panel-list .option-container button:hover,
+  #locations-panel-list .option-container a:hover {
+    background-color: #f1f3f4;
+  }
+
+  #locations-panel-list .option {
+    border: 1px solid #bdc1c6;
+    border-radius: 0.9em;
+    color: #1967d2;
+    font-size: 0.9em;
+    font-weight: 500;
+    padding: 0.3em 0;
+  }
+
+  #locations-panel-list .option > span {
+    margin: 0 0.9em;
+  }
+
+  #location-results-list {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* ------------- DETAILS PANEL ------------------------------- */
+  #locations-panel-details {
+    padding: 1.4em;
+    box-sizing: border-box;
+    display: none;
+  }
+
+  #locations-panel-details .back-button {
+    font-size: 1em;
+    font-weight: 500;
+    color: #1967d2;
+    display: block;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-family: inherit;
+  }
+
+  #locations-panel-details .back-button .icon {
+    width: 20px;
+    height: 20px;
+    vertical-align: bottom;
+
+    /* Match link color #1967d2 */
+    filter: invert(30%) sepia(67%) saturate(7379%) hue-rotate(209deg) brightness(95%) contrast(80%);
+  }
+
+  #locations-panel-details > header {
+    text-align: center;
+  }
+
+  #locations-panel-details .banner {
+    margin-top: 1em;
+  }
+
+  #locations-panel-details h2 {
+    font-size: 1.1em;
+    font-weight: 500;
+    margin-bottom: 0.3em;
+  }
+
+  #locations-panel-details .distance {
+    font-size: 0.9em;
+    text-align: center;
+  }
+
+  #locations-panel-details .address {
+    text-align: center;
+    font-size: 0.9em;
+    margin-top: 1.3em;
+  }
+
+  #locations-panel-details .atmosphere {
+    text-align: center;
+    font-size: 0.9em;
+    margin: 0.8em 0;
+  }
+
+  #locations-panel-details .star-rating-numeric {
+    color: #555;
+  }
+
+  #locations-panel-details .star-icon {
+    width: 1.2em;
+    height: 1.2em;
+    margin-right: -0.3em;
+    margin-top: -0.08em;
+    vertical-align: top;
+    filter: invert(88%) sepia(60%) saturate(2073%) hue-rotate(318deg) brightness(93%) contrast(104%);
+  }
+
+  #locations-panel-details .star-icon:last-of-type {
+    margin-right: 0.2em;
+  }
+
+  #locations-panel-details .price-dollars {
+    color: #555;
+  }
+
+  #locations-panel-details hr {
+    height: 1px;
+    color: rgba(0, 0, 0, 0.12);
+    background-color: rgba(0, 0, 0, 0.12);
+    border: none;
+    margin-bottom: 1em;
+  }
+
+  #locations-panel-details .contact {
+    font-size: 0.9em;
+    margin: 0.8em 0;
+    display: flex;
+    align-items: center;
+  }
+
+  #locations-panel-details .contact .icon {
+    flex: 0 0 auto;
+    width: 1.5em;
+    height: 1.5em;
+  }
+
+  #locations-panel-details .contact .right {
+    padding: 0.1em 0 0 1em;
+  }
+
+  #locations-panel-details .hours .weekday {
+    display: inline-block;
+    width: 5em;
+  }
+
+  #locations-panel-details .website a {
+    white-space: nowrap;
+    display: inline-block;
+    overflow: hidden;
+    max-width: 16em;
+    text-overflow: ellipsis;
+  }
+
+  #locations-panel-details p.attribution {
+    color: #777;
+    margin: 0;
+    font-size: 0.8em;
+    font-style: italic;
+  }
+  #shopify-section-{{ section.id }} #avis200223 .header-title {
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 0px;
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-family: 'sackers gothic medium';
+  margin-left: 8% !important;
+}
+#shopify-section-{{ section.id }} #avis200223 .header-description {
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin: 0px;
+  font-family: 'sackers gothic medium';
+  margin-left: 8% !important;
+}
+</style>
+
+<script>
+  'use strict';
+
+  /** Hide a DOM element. */
+  function hideElement(el) {
+    el.style.display = 'none';
+  }
+
+  /** Show a DOM element that has been hidden. */
+  function showElement(el) {
+    el.style.display = 'block';
+  }
+
+  /** Helper function to generate a Google Maps directions URL */
+  function generateDirectionsURL(origin, destination) {
+    const googleMapsUrlBase = 'https://www.google.com/maps/dir/?';
+    const searchParams = new URLSearchParams('api=1');
+    searchParams.append('origin', origin);
+    const destinationParam = [];
+    // Add title to destinationParam except in cases where Quick Builder set
+    // the title to the first line of the address
+    if (destination.title !== destination.address1) {
+      destinationParam.push(destination.title);
+    }
+    destinationParam.push(destination.address1, destination.address2);
+    searchParams.append('destination', destinationParam.join(','));
+    return googleMapsUrlBase + searchParams.toString();
+  }
+
+  /**
+   * Defines an instance of the Locator+ solution, to be instantiated
+   * when the Maps library is loaded.
+   */
+  function LocatorPlus(configuration) {
+    const locator = this;
+
+    locator.locations = configuration.locations || [];
+    locator.capabilities = configuration.capabilities || {};
+
+    const mapEl = document.getElementById('gmp-map');
+    const panelEl = document.getElementById('locations-panel');
+    locator.panelListEl = document.getElementById('locations-panel-list');
+    const sectionNameEl =
+        document.getElementById('location-results-section-name');
+    const resultsContainerEl = document.getElementById('location-results-list');
+
+    const itemsTemplate = Handlebars.compile(
+        document.getElementById('locator-result-items-tmpl').innerHTML);
+
+    locator.searchLocation = null;
+    locator.searchLocationMarker = null;
+    locator.selectedLocationIdx = null;
+    locator.userCountry = null;
+
+    // Initialize the map -------------------------------------------------------
+    locator.map = new google.maps.Map(mapEl, configuration.mapOptions);
+
+    // Store selection.
+    const selectResultItem = function(locationIdx, panToMarker, scrollToResult) {
+      locator.selectedLocationIdx = locationIdx;
+      for (let locationElem of resultsContainerEl.children) {
+        locationElem.classList.remove('selected');
+        if (getResultIndex(locationElem) === locator.selectedLocationIdx) {
+          locationElem.classList.add('selected');
+          if (scrollToResult) {
+            panelEl.scrollTop = locationElem.offsetTop;
+          }
+        }
+      }
+      if (panToMarker && (locationIdx != null)) {
+        locator.map.panTo(locator.locations[locationIdx].coords);
+      }
+    };
+
+
+
+    // Create a marker for each location.
+    const markers = locator.locations.map(function(location, index) {
+      const marker = new google.maps.Marker({
+        position: location.coords,
+        map: locator.map,
+        title: location.title
+      });
+      marker.addListener('click', function() {
+        selectResultItem(index, false, true);
+      });
+      return marker;
+    });
+
+    // Fit map to marker bounds.
+    locator.updateBounds = function() {
+      const bounds = new google.maps.LatLngBounds();
+      if (locator.searchLocationMarker) {
+        bounds.extend(locator.searchLocationMarker.getPosition());
+      }
+      for (let i = 0; i < markers.length; i++) {
+        bounds.extend(markers[i].getPosition());
+      }
+      locator.map.fitBounds(bounds);
+    };
+    if (locator.locations.length) {
+      locator.updateBounds();
+    }
+
+    // Get the distance of a store location to the user's location,
+    // used in sorting the list.
+    const getLocationDistance = function(location) {
+      if (!locator.searchLocation) return null;
+
+      // Use travel distance if available (from Distance Matrix).
+      if (location.travelDistanceValue != null) {
+        return location.travelDistanceValue;
+      }
+
+      // Fall back to straight-line distance.
+      return google.maps.geometry.spherical.computeDistanceBetween(
+          new google.maps.LatLng(location.coords),
+          locator.searchLocation.location);
+    };
+
+    // Render the results list --------------------------------------------------
+
+    // When the results list re-renders, always update directions on the
+    // first selection event.
+    let updateDirectionsOnSelect;
+
+    const getResultIndex = function(elem) {
+      return parseInt(elem.getAttribute('data-location-index'));
+    };
+
+    locator.renderResultsList = function() {
+      let locations = locator.locations.slice();
+      for (let i = 0; i < locations.length; i++) {
+        locations[i].index = i;
+      }
+      if (locator.searchLocation) {
+        sectionNameEl.textContent =
+            'Nearest locations (' + locations.length + ')';
+        locations.sort(function(a, b) {
+          return getLocationDistance(a) - getLocationDistance(b);
+        });
+      } else {
+        //sectionNameEl.textContent = `Nos boutiques (${locations.length})`;
+      }
+      const resultItemContext = {locations: locations};
+      resultsContainerEl.innerHTML = itemsTemplate(resultItemContext);
+      updateDirectionsOnSelect = true;
+      for (let item of resultsContainerEl.children) {
+        const resultIndex = getResultIndex(item);
+        if (resultIndex === locator.selectedLocationIdx) {
+          item.classList.add('selected');
+        }
+
+        const resultSelectionHandler = function() {
+          if (resultIndex !== locator.selectedLocationIdx ||
+                updateDirectionsOnSelect) {
+            selectResultItem(resultIndex, true, false);
+            locator.updateDirections();
+            updateDirectionsOnSelect = false;
+          }
+        };
+
+        // Clicking anywhere on the item selects this location.
+        // Additionally, create a button element to make this behavior
+        // accessible under tab navigation.
+        item.addEventListener('click', resultSelectionHandler);
+        item.querySelector('.select-location')
+            .addEventListener('click', function(e) {
+              resultSelectionHandler();
+              e.stopPropagation();
+            });
+
+        item.querySelector('.details-button')
+            .addEventListener('click', function() {
+              locator.showDetails(resultIndex);
+            });
+
+        // Clicking the directions button will open Google Maps directions in a
+        // new tab
+        const origin = (locator.searchLocation != null) ?
+            locator.searchLocation.location :
+            '';
+        const destination = locator.locations[resultIndex];
+        const googleMapsUrl = generateDirectionsURL(origin, destination);
+        item.querySelector('.directions-button')
+            .setAttribute('href', googleMapsUrl);
+      }
+    };
+
+    // Optional capability initialization --------------------------------------
+    initializeSearchInput(locator);
+    initializeDistanceMatrix(locator);
+    initializeDirections(locator);
+    initializeDetails(locator);
+
+    // Initial render of results -----------------------------------------------
+    locator.renderResultsList();
+  }
+
+  /** When the search input capability is enabled, initialize it. */
+  function initializeSearchInput(locator) {
+    const geocodeCache = new Map();
+    const geocoder = new google.maps.Geocoder();
+
+    const searchInputEl = document.getElementById('location-search-input');
+    const searchButtonEl = document.getElementById('location-search-button');
+
+    const updateSearchLocation = function(address, location) {
+      if (locator.searchLocationMarker) {
+        locator.searchLocationMarker.setMap(null);
+      }
+      if (!location) {
+        locator.searchLocation = null;
+        return;
+      }
+      locator.searchLocation = {'address': address, 'location': location};
+      locator.searchLocationMarker = new google.maps.Marker({
+        position: location,
+        map: locator.map,
+        title: 'My location',
+        icon: {
+          path: google.maps.SymbolPath.CIRCLE,
+          scale: 12,
+          fillColor: '#3367D6',
+          fillOpacity: 0.5,
+          strokeOpacity: 0,
+        }
+      });
+
+      // Update the locator's idea of the user's country, used for units. Use
+      // `formatted_address` instead of the more structured `address_components`
+      // to avoid an additional billed call.
+      const addressParts = address.split(' ');
+      locator.userCountry = addressParts[addressParts.length - 1];
+
+      // Update map bounds to include the new location marker.
+      locator.updateBounds();
+
+      // Update the result list so we can sort it by proximity.
+      locator.renderResultsList();
+
+      locator.updateTravelTimes();
+
+      locator.clearDirections();
+    };
+
+    const geocodeSearch = function(query) {
+      if (!query) {
+        return;
+      }
+
+      const handleResult = function(geocodeResult) {
+        searchInputEl.value = geocodeResult.formatted_address;
+        updateSearchLocation(
+            geocodeResult.formatted_address, geocodeResult.geometry.location);
+      };
+
+      if (geocodeCache.has(query)) {
+        handleResult(geocodeCache.get(query));
+        return;
+      }
+      const request = {address: query, bounds: locator.map.getBounds()};
+      geocoder.geocode(request, function(results, status) {
+        if (status === 'OK') {
+          if (results.length > 0) {
+            const result = results[0];
+            geocodeCache.set(query, result);
+            handleResult(result);
+          }
+        }
+      });
+    };
+
+    // Set up geocoding on the search input.
+    searchButtonEl.addEventListener('click', function() {
+      geocodeSearch(searchInputEl.value.trim());
+    });
+
+    // Initialize Autocomplete.
+    initializeSearchInputAutocomplete(
+        locator, searchInputEl, geocodeSearch, updateSearchLocation);
+  }
+
+  /** Add Autocomplete to the search input. */
+  function initializeSearchInputAutocomplete(
+      locator, searchInputEl, fallbackSearch, searchLocationUpdater) {
+    // Set up Autocomplete on the search input. Bias results to map viewport.
+    const autocomplete = new google.maps.places.Autocomplete(searchInputEl, {
+      types: ['geocode'],
+      fields: ['place_id', 'formatted_address', 'geometry.location']
+    });
+    autocomplete.bindTo('bounds', locator.map);
+    autocomplete.addListener('place_changed', function() {
+      const placeResult = autocomplete.getPlace();
+      if (!placeResult.geometry) {
+        // Hitting 'Enter' without selecting a suggestion will result in a
+        // placeResult with only the text input value as the 'name' field.
+        fallbackSearch(placeResult.name);
+        return;
+      }
+      searchLocationUpdater(
+          placeResult.formatted_address, placeResult.geometry.location);
+    });
+  }
+
+  /** Initialize Distance Matrix for the locator. */
+  function initializeDistanceMatrix(locator) {
+    const distanceMatrixService = new google.maps.DistanceMatrixService();
+
+    // Annotate travel times to the selected location using Distance Matrix.
+    locator.updateTravelTimes = function() {
+      if (!locator.searchLocation) return;
+
+      const units = (locator.userCountry === 'USA') ?
+          google.maps.UnitSystem.IMPERIAL :
+          google.maps.UnitSystem.METRIC;
+      const request = {
+        origins: [locator.searchLocation.location],
+        destinations: locator.locations.map(function(x) {
+          return x.coords;
+        }),
+        travelMode: google.maps.TravelMode.DRIVING,
+        unitSystem: units,
+      };
+      const callback = function(response, status) {
+        if (status === 'OK') {
+          const distances = response.rows[0].elements;
+          for (let i = 0; i < distances.length; i++) {
+            const distResult = distances[i];
+            let travelDistanceText, travelDistanceValue;
+            if (distResult.status === 'OK') {
+              travelDistanceText = distResult.distance.text;
+              travelDistanceValue = distResult.distance.value;
+            }
+            const location = locator.locations[i];
+            location.travelDistanceText = travelDistanceText;
+            location.travelDistanceValue = travelDistanceValue;
+          }
+
+          // Re-render the results list, in case the ordering has changed.
+          locator.renderResultsList();
+        }
+      };
+      distanceMatrixService.getDistanceMatrix(request, callback);
+    };
+  }
+
+  /** Initialize Directions service for the locator. */
+  function initializeDirections(locator) {
+    const directionsCache = new Map();
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer({
+      suppressMarkers: true,
+    });
+
+    // Update directions displayed from the search location to
+    // the selected location on the map.
+    locator.updateDirections = function() {
+      if (!locator.searchLocation || (locator.selectedLocationIdx == null)) {
+        return;
+      }
+      const cacheKey = JSON.stringify(
+          [locator.searchLocation.location, locator.selectedLocationIdx]);
+      if (directionsCache.has(cacheKey)) {
+        const directions = directionsCache.get(cacheKey);
+        directionsRenderer.setMap(locator.map);
+        directionsRenderer.setDirections(directions);
+        return;
+      }
+      const request = {
+        origin: locator.searchLocation.location,
+        destination: locator.locations[locator.selectedLocationIdx].coords,
+        travelMode: google.maps.TravelMode.DRIVING
+      };
+      directionsService.route(request, function(response, status) {
+        if (status === 'OK') {
+          directionsRenderer.setMap(locator.map);
+          directionsRenderer.setDirections(response);
+          directionsCache.set(cacheKey, response);
+        }
+      });
+    };
+
+    locator.clearDirections = function() {
+      directionsRenderer.setMap(null);
+    };
+  }
+
+  /** Initialize Place Details service and UI for the locator. */
+  function initializeDetails(locator) {
+    const panelDetailsEl = document.getElementById('locations-panel-details');
+    const detailsService = new google.maps.places.PlacesService(locator.map);
+
+    const detailsTemplate = Handlebars.compile(
+        document.getElementById('locator-details-tmpl').innerHTML);
+
+    const renderDetails = function(context) {
+      panelDetailsEl.innerHTML = detailsTemplate(context);
+      panelDetailsEl.querySelector('.back-button')
+          .addEventListener('click', hideDetails);
+    };
+
+    const hideDetails = function() {
+      showElement(locator.panelListEl);
+      hideElement(panelDetailsEl);
+    };
+
+    locator.showDetails = function(locationIndex) {
+      const location = locator.locations[locationIndex];
+      const context = {location};
+
+      // Helper function to create a fixed-size array.
+      const initArray = function(arraySize) {
+        const array = [];
+        while (array.length < arraySize) {
+          array.push(0);
+        }
+        return array;
+      };
+
+      if (location.placeId) {
+        const request = {
+          placeId: location.placeId,
+          fields: [
+            'formatted_phone_number', 'website', 'opening_hours', 'url',
+            'utc_offset_minutes', 'price_level', 'rating', 'user_ratings_total'
+          ]
+        };
+        detailsService.getDetails(request, function(place, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            if (place.opening_hours) {
+              const daysHours =
+                  place.opening_hours.weekday_text.map(e => e.split(/\:\s+/))
+                      .map(e => ({'days': e[0].substr(0, 3), 'hours': e[1]}));
+
+              for (let i = 1; i < daysHours.length; i++) {
+                if (daysHours[i - 1].hours === daysHours[i].hours) {
+                  if (daysHours[i - 1].days.indexOf('-') !== -1) {
+                    daysHours[i - 1].days =
+                        daysHours[i - 1].days.replace(/\w+$/, daysHours[i].days);
+                  } else {
+                    daysHours[i - 1].days += ' - ' + daysHours[i].days;
+                  }
+                  daysHours.splice(i--, 1);
+                }
+              }
+              place.openingHoursSummary = daysHours;
+            }
+            if (place.rating) {
+              const starsOutOfTen = Math.round(2 * place.rating);
+              const fullStars = Math.floor(starsOutOfTen / 2);
+              const halfStars = fullStars !== starsOutOfTen / 2 ? 1 : 0;
+              const emptyStars = 5 - fullStars - halfStars;
+
+              // Express stars as arrays to make iterating in Handlebars easy.
+              place.fullStarIcons = initArray(fullStars);
+              place.halfStarIcons = initArray(halfStars);
+              place.emptyStarIcons = initArray(emptyStars);
+            }
+            if (place.price_level) {
+              place.dollarSigns = initArray(place.price_level);
+            }
+            if (place.website) {
+              const url = new URL(place.website);
+              place.websiteDomain = url.hostname;
+            }
+
+            context.place = place;
+            renderDetails(context);
+          }
+        });
+      }
+      renderDetails(context);
+      hideElement(locator.panelListEl);
+      showElement(panelDetailsEl);
+    };
+  }
+</script>
+<script>
+  const CONFIGURATION = {
+    "mapOptions": {"center":{"lat":38.0,"lng":-100.0},"fullscreenControl":true,"mapTypeControl":false,"streetViewControl":false,"zoom":10,"zoomControl":true,"maxZoom":17,"mapId":"8da8952faf5576fb"},
+    "mapsApiKey": "AIzaSyCf1AF56EndMBhmv_97Mal8iAn25Qadj9E",
+    "capabilities": {"input":true,"autocomplete":true,"directions":true,"distanceMatrix":true,"details":true,"actions":false},
+    "locations": [
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=La boutique Voltaire&utm_content=ventes@voltaire.bike", "title":"La Boutique Voltaire","address1":"21 Rue de Rivoli","address2":"75004 Paris, France","coords":{"lat":48.8560488782909,"lng":2.357183558895497},"placeId":"ChIJ-09cMiRu5kcRPH12ndek04U"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Almet Electric&utm_content=contact@almet-electric.fr", "title":"Almet Electric","address1":"301 Rue du Faubourg Saint-Antoine","address2":"75011 Paris, France","coords":{"lat":48.849254880263736,"lng":2.3913830355819687},"placeId":"ChIJHf_F5yhz5kcRF4o9GruB5nI"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Atelier des 2 roues&utm_content=atelier2roues78@gmail.com", "title":"Atelier des 2 roues","address1":"139 Boulevard Carnot","address2":"78110 Le Vésinet, France","coords":{"lat":48.897856325421614,"lng":2.1125500932540753},"placeId":"ChIJXTkQGPdj5kcRODLONN6HGUI"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Bicicletta Shop&utm_content=contact@bicicletta-shop.com", "title":"Bicicletta Shop","address1":"9bis Rue Defly","address2":"06000 Nice, France","coords":{"lat":43.701990188837485,"lng":7.276871535581968},"placeId":"ChIJHfv-urrazRIR4pkSi3qojo8"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Bis-Cycle&utm_content=bis.cycle12@gmail.com", "title":"Bis-Cycle","address1":"52 rue Saint-Cyrice","address2":"12000 Rodez, France","coords":{"lat":44.35540284174784,"lng":2.576107964418015},"placeId":"ChIJX0CAoZN9shIRFPcw1x_dzfA"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Bobine Concept&utm_content=contact@bobine-concept.com", "title":"Bobine Concept","address1":"54 Avenue Du Prado","address2":"13006 Marseille, France","coords":{"lat":43.28322863408981,"lng":5.38490787790983},"placeId":"ChIJY-UglN_ByRIRbcJlw4SUBxs"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Byke The Way&utm_content=byketheway@gmail.com", "title":"Byke The Way","address1":"113 Rue Legendre","address2":"75017 Paris, France","coords":{"lat":48.889047807499225,"lng":2.322166464418034},"placeId":"ChIJPwaGBq1v5kcRvPy_7PVCNtM"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cargo Mass &utm_content=contact@cargomass.fr", "title":"Cargo Mass","address1":"46 Rue Consolat","address2":"13001 Marseille, France","coords":{"lat":43.30027988123676,"lng":5.387597535581974},"placeId":"ChIJB2fTC-_ByRIRg-Cf8gVh2HY"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Citron&utm_content=hello@velocitron.fr", "title":"Citron","address1":"52 Rue d'Antrain","address2":"35000 Rennes, France","coords":{"lat":48.11684126450644,"lng":-1.6781176644180307},"placeId":"ChIJ2zKhtHPfDkgR-lMIGFPsNaI"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Culture Velo Caen&utm_content=14caen@culturevelo.com", "title":"Culture Vélo Caen","address1":"30 Rue Joseph Jacquard","address2":"14120 Mondeville, France","coords":{"lat":49.16069730824056,"lng":-0.2997794644180307},"placeId":"ChIJI18QvZ1pCkgRqGkPWsEEDU4"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Velo Station Marseille&utm_content=13marseille02@velostation.com", "title":"Vélo Station Marseille","address1":"56 Avenue Robert Schuman","address2":"13002 Marseille, France","coords":{"lat":43.30404926875176,"lng":5.367091335581966},"placeId":"ChIJPSEztrvByRIRFnNEBId1L_A"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycl’emouv Paris 13&utm_content=emmanuel.vitrai@cyclemouv.fr", "title":"Cycl’emouv Paris 13","address1":"22 Avenue Léon Bollée","address2":"75013 Paris, France","coords":{"lat":48.81814297977234,"lng":2.3622987644180116},"placeId":"ChIJJYJwnwZx5kcRarfi9JqcvFA"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycl’emouv Paris 16&utm_content=emmanuel.vitrai@cyclemouv.fr", "title":"Cycl’emouv Paris 16","address1":"95 Rue Chardon Lagache","address2":"75016 Paris, France","coords":{"lat":48.84047191272268,"lng":2.263404977909844},"placeId":"ChIJp7hcqnJ75kcR2dugJwtikfY"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=DRING&utm_content=contact@dringvelosurbains.com", "title":"Dring","address1":"216 Rue Garibaldi","address2":"69003 Lyon, France","coords":{"lat":45.75790692509814,"lng":4.852267035581979},"placeId":"ChIJNUWLh1Tr9EcR4E4hdo_k3RQ"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=E-Bikes Gallery &utm_content=arthur.b@ebikesgallery.com", "title":"E-Bikes Gallery","address1":"145 Avenue de la République","address2":"59110 La Madeleine, France","coords":{"lat":50.64821362650743,"lng":3.0772997355819687},"placeId":"ChIJadU7tx4rw0cR1l1UX76DXnU"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Esprit Cycles&utm_content=contact@espritcyclesbordeaux.com", "title":"Esprit Cycles","address1":"27 Rue du Dr Charles Nancel Penard","address2":"33000 Bordeaux, France","coords":{"lat":44.83958190710947,"lng":-0.5815422355819644},"placeId":"ChIJyapwtcInVQ0R6Svf7nrZfzM"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Goodbike&utm_content=goodbike78@gmail.com", "title":"Goodbike","address1":"Zone commerciale des croix","address2":"78940 La Queue-lez-Yvelines, France","coords":{"lat":48.80376559800638,"lng":1.7807847355819861},"placeId":"ChIJB8rtHtSZ5kcRmXUQvy28Tjs"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Goupil Mobilité&utm_content=cyrilfereol.cf@gmail.com", "title":"Goupil Mobilité","address1":"28 bis Cr du Général de Gaulle","address2":"33170 Gradignan, France","coords":{"lat":44.7853810480178,"lng":-0.6054346355819717},"placeId":"ChIJOU0e1CTZVA0RDAbI6mEK9W4"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Jean Connaît Un Rayon&utm_content=contact@jean-connait-un-rayon.fr", "title":"Jean Connaît Un Rayon","address1":"19 Quai de l'impératrice Eugénie","address2":"14800 Deauville, France","coords":{"lat":49.36227399932872,"lng":0.08134883558195138},"placeId":"ChIJLzGBrXLV4UcRkE7ktuSr3Ro"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Km0 &utm_content=contact@kilometrezero.eu", "title":"Km0","address1":"20 Rue des Acacias","address2":"75017 Paris, France","coords":{"lat":48.87657003038243,"lng":2.291088906745906},"placeId":"ChIJOw2qRu1v5kcR5JMxj1fWswU"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Zeride Boulogne&utm_content=centreboulogne@zeride.fr", "title":"Zeride Boulogne","address1":"16 Avenue Edouard Vaillant","address2":"92100 Boulogne-Billancourt, France","coords":{"lat":48.83698385587148,"lng":2.2532356355819783},"placeId":"ChIJ_YUzxJN65kcRJIdhrqoiJwI"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Zeride Paris 8&utm_content=centreparis8@zeride.fr", "title":"Zeride Paris 8","address1":"63 boulevard Malesherbes","address2":"75008 Paris, France","coords":{"lat":48.87634709348207,"lng":2.31764857790985},"placeId":"ChIJj4Q3oMtv5kcRs4W1bOE8D0A"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=L'Atelier du Poupoupidou&utm_content=contact@lepoupoupidou.fr", "title":"L'Atelier du Poupoupidou","address1":"21 Quai Ernest Renaud","address2":"44100 Nantes, France","coords":{"lat":47.20494065624647,"lng":-1.5750871220901486},"placeId":"ChIJIZaliwnsBUgRd5hgu54g7es"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=L'espace du cycle &utm_content=contact@lespaceducycle.com", "title":"L'Espace du Cycle","address1":"53 avenue de Caen","address2":"76100 Rouen, France","coords":{"lat":49.42922203480308,"lng":1.073892435581989},"placeId":"ChIJ9wH676Dg4EcRmrlwSAHmTXA"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=La clef du vélo&utm_content=contact@laclefduvelo.fr", "title":"La Clef du Vélo","address1":"27 Rue Montesquieu","address2":"54000 Nancy, France","coords":{"lat":48.69025055399323,"lng":6.186148477909845},"placeId":"ChIJY2VUbDKYlEcRQkbsAY2ILjY"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Le Hollandais Vélo &utm_content=lehollandaisvelo@gmail.com", "title":"Le Hollandais Vélo","address1":"24 Rue de la Barre","address2":"59000 Lille, France","coords":{"lat":50.63891773862077,"lng":3.05753223558197},"placeId":"ChIJramjaNPVwkcR424o4tXzQNU"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Les Vélos de Pilou&utm_content=info@lesvelos-depilou.fr", "title":"Les Vélos de Pilou","address1":"Bâtiment du Pouy, 1798 Avenue Charles de Gaulle","address2":"40510 Seignosse, France","coords":{"lat":43.688405255330714,"lng":-1.3736523932540812},"placeId":"ChIJNVm6CZtbUQ0Rt21R7L9YXHs"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Levelandais 11&utm_content=levelandais@gmail.com", "title":"Le Velandais 11","address1":"38 bis Avenue de la République","address2":"75011 Paris, France","coords":{"lat":48.86553790835705,"lng":2.3728353202377317},"placeId":"ChIJJ-E-dx5t5kcROauF5uv-L-U"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=L’Encyclo&utm_content=contact@velos-encyclo.fr", "title":"L'Encyclo","address1":"2 Rue Saint Nicolas","address2":"78600 Maisons-Laffitte, France","coords":{"lat":48.94561899658936,"lng":2.1430543067459107},"placeId":"ChIJ-1G0xg9h5kcRvuJfzqG9usE"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Levelandais 11&utm_content=levelandais@gmail.com", "title":"mobicity","address1":"300 Av. de l\u0027Université","address2":"83160 La Valette-du-Var, France","coords":{"lat":43.13713924852725,"lng":6.005605835581953},"placeId":"ChIJfQGW6qEZyRIRIJqfUr8z7pE"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Moilutin cycles&utm_content=moilutin.cycles@gmail.com", "title":"Moilutin Cycles","address1":"7 Route de Reims","address2":"51370 Saint-Brice-Courcelles, France","coords":{"lat":49.26437650921356,"lng":3.991111364418014},"placeId":"ChIJpw8vm9YJ6UcRV-BdfodxXBo"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=My Cycle Châlon&utm_content=chalon@my-cycle.fr", "title":"My Cycle Châlon","address1":"26 Boulevard De La République","address2":"71100 Chalon-sur-Saône, France","coords":{"lat":46.7838151796339,"lng":4.849481306745891},"placeId":"ChIJCdcxgW398kcRQ4LA3pjtTP0"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=My Cycle Dijon&utm_content=dijon@my-cycle.fr", "title":"My Cycle Dijon","address1":"14 Rue de la Poste","address2":"21000 Dijon, France","coords":{"lat":47.323606753572406,"lng":5.035541364418026},"placeId":"ChIJLS4qzmKd8kcRKAdIWi2wFec"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=My Cycle Quetigny&utm_content=quetigny@my-cycle.fr", "title":"My Cycle Quetigny","address1":"12 Rue Des Chalands","address2":"21800 Quetigny, France","coords":{"lat":47.31145466582127,"lng":5.100341535581974},"placeId":"ChIJWww_dxSf8kcRydd1yXP2wHk"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Pastel Richer &utm_content=hello.richer@pastel-cycles.com", "title":"Pastel Cycles Richer","address1":"4 Rue Richer","address2":"75009 Paris, France","coords":{"lat":48.87423729117927,"lng":2.3474319355819695},"placeId":"ChIJXUgxbKNv5kcRZH0ElzcXdpk"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Pastel Turbigo&utm_content=hello.turbigo@pastel-cycles.com", "title":"Pastel Cycles Turbigo","address1":"38 Rue de Turbigo","address2":"75003 Paris, France","coords":{"lat":48.864897078281764,"lng":2.3538607932541034},"placeId":"ChIJc89zJkdv5kcRNEsMWGJyjAw"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Quai des cycles&utm_content=contact@quaidescycles.fr", "title":"Quai des cycles","address1":"145 Rue Cardinet","address2":"75017 Paris, France","coords":{"lat":48.88785250969152,"lng":2.314071849073782},"placeId":"ChIJ24ZzVBtv5kcRdD2q4vMVOLA"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Scooter Avenue&utm_content=scooteravenue92120@yahoo.fr", "title":"Scooter Avenue","address1":"64 Avenue Aristide Briand","address2":"92120 Montrouge, France","coords":{"lat":48.81720442274714,"lng":2.325247235581971},"placeId":"ChIJexjg7qlx5kcRAW7bYTZd-DA"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Spotibike &utm_content=contact@spotibike.fr", "title":"Spotibike","address1":"14 Gd Rue Charles de Gaulle","address2":"92600 Asnières-sur-Seine, France","coords":{"lat":48.90613643625671,"lng":2.2867666067459114},"placeId":"ChIJf2aKX9Fv5kcRb2TEFky_0js"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Starley Cycle &utm_content=starleycycle@gmail.com", "title":"Starley Cycle","address1":"5 Rue Pierre Louis Guyard","address2":"78360 Montesson, France","coords":{"lat":48.90870411317543,"lng":2.1523974067459006},"placeId":"ChIJJ2-a9thj5kcREGx92WrN5Jg"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=The Bicycle Club &utm_content=contact@thebicycleclub.fr", "title":"The Bicycle Club","address1":"57 Quai de la Fosse","address2":"44000 Nantes, France","coords":{"lat":47.210034317673745,"lng":-1.5646258644180255},"placeId":"ChIJHbTZbT1VuKsRD3YKAkzKzn0"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Vélo Electrique France&utm_content=contact@veloelectriquefrance.fr", "title":"Vélo Electrique France","address1":"33 Avenue Secrétan","address2":"75019 Paris, France","coords":{"lat":48.88123599970774,"lng":2.373810964418017},"placeId":"ChIJc-c18Nxt5kcRSgqzqK2jiJo"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Selfridges&utm_content=devin@smartechwrld.com", "title":"Selfridges","address1":"400 Oxford St.","address2":"London W1A 1AB, Royaume-Uni","coords":{"lat":51.514271289086004,"lng":-0.1558364932540801},"placeId":"ChIJ8dWxJzMFdkgRn3kJ5Lk3NMg"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Pajung E-Bikes&utm_content=kontakt@pajungebikes.com", "title":"Pajung E-Bikes","address1":"Südbahnhofstraße 18","address2":"63739 Aschaffenbourg, Allemagne","coords":{"lat":49.96821121769184,"lng":9.145107264418026},"placeId":"ChIJveW4vgdJvUcRIC3jaInALOQ"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Uniques Lyon&utm_content=lyon@uniques.fr", "title":"Uniques Lyon","address1":"84 Avenue Maréchal de Saxe","address2":"69003 Lyon, France","coords":{"lat":45.760840420375764,"lng":4.845354035581977},"placeId":"ChIJCSqJp6rr9EcR1j1-KYybH5M"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Extreme bikes&utm_content=funbike13@gmail.com", "title":"Extreme bikes","address1":"8 Boulevard Théodore Thurner","address2":"13006 Marseille, France","coords":{"lat":43.29156308318268,"lng":5.383254822090162},"placeId":"ChIJDRTjzrrAyRIR-jZVxPY3hrM"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Les cyclistes branchés&utm_content=charenton@les-cyclistes-branches.com", "title":"Les Cyclistes Branchés","address1":"74 Rue de Paris","address2":"94220 Charenton-le-Pont, France","coords":{"lat":48.8228097825596,"lng":2.4121221644180357},"placeId":"ChIJtw8W4Plz5kcRIka5fZxdxQ0"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Bicyclette verte&utm_content=labicycletteverte.toulouse@gmail.com", "title":"La Bicyclette Verte","address1":"2 Rue de la Colombette","address2":"31000 Toulouse, France","coords":{"lat":43.60446725776397,"lng":1.4504401411045098},"placeId":"ChIJ9Ttxfpm8rhIRB022yFFwICw"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycles Thebault&utm_content=cyclesthebault@live.fr", "title":"Cycles Thébault","address1":"La Forge","address2":"35760 Saint-Grégoire, France","coords":{"lat":48.15104425917708,"lng":-1.6851380490738},"placeId":"ChIJwXQvkZTdDkgRIczIW2ZlZbI"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Decathlon Brest", "title":"Decathlon Brest","address1":"105 Rue Pierre Jakez Helias","address2":"29490 Guipavas, France","coords":{"lat":48.416474799999975,"lng":-4.435021664418037},"placeId":"ChIJUekLvUG6FkgR9m-OnGtmFUI"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Decathlon Cholet", "title":"Decathlon Cholet","address1":"L'Autre Faubourg","address2":"49300 Cholet, France","coords":{"lat":47.074793899999996,"lng":-0.8347591355819639},"placeId":"ChIJl0Y8FGhGBkgRx2r1meC8Pkg"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Decathlon Orléans", "title":"Decathlon Orléans","address1":"Avenue Roger Secrétain","address2":"45000 Orléans, France","coords":{"lat":47.87533820000001,"lng":1.911510604893496},"placeId":"ChIJsWlsHeTk5EcRYkWMwCl311w"},
+      {"booking": "https://calendly.com/fyc_elephantpark/voltaire-demo-ride?month=2023-04", "title":"Fix Your Cycle","address1":"Unit 7, Mediaworks White City Place","address2":"191 Wood Ln, London W12 7FP, Royaume-Uni","coords":{"lat":51.51333510000001,"lng":-0.22728064110450363},"placeId":"ChIJZzQPrccPdkgRrOwJdiflfH0"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Futura Cycles&utm_content=contact@djoun.fr", "title":"Futura Cycles","address1":"59 Boulevard Richard Wallace","address2":"92800 Puteaux, France","coords":{"lat":48.88112077223271,"lng":2.2368276411045107},"placeId":"ChIJVVXxVB5l5kcRXNkcWOFzJxM"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Le Break 07&utm_content=lebreak07@wanadoo.fr", "title":"Le Break 07","address1":"Le Boulevard","address2":"07360 Les Ollières-sur-Eyrieux, France","coords":{"lat":44.80571289394298,"lng":4.623919793865783},"placeId":"ChIJVTQ4EBcxtRIRN6AfL5Q8qyo"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Les cycles du marais&utm_content=contact@lescyclesdumarais.com", "title":"Les Cycles du Marais","address1":"10 Place Alsace Lorraine","address2":"44220 Couëron, France","coords":{"lat":47.210308366925844,"lng":-1.7281570294477544},"placeId":"ChIJLefsrv-RBUgRaKzo03l4-Xk"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Roues&utm_content=tobias.kuhlmann@roues.fr", "title":"Roues","address1":"15 Rue Beaurepaire","address2":"75010 Paris, France","coords":{"lat":48.87056608212794,"lng":2.363724029447729},"placeId":"ChIJd0UPUntv5kcR0qHeoFTrjB8"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Pastel Batignolles&utm_content=julien@pastel-cycles.com", "title":"Pastel Batignolles","address1":"29 Rue des Batignolles","address2":"75017 Paris, France","coords":{"lat":48.88480778036305,"lng":2.3209906914016853},"placeId":"ChIJCaHLU7Jv5kcRFak5x7rFSW8"},
+      {"booking": "", "title":"27 Lisboa","address1":"R. do Poço dos Negros 19","address2":"1200-335 Lisboa, Portugal","coords":{"lat":38.71076591854191,"lng":-9.149966549073802},"placeId":"ChIJUbUQl4E0GQ0R6pdjcHRaitM"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Ma vie à vélo&utm_content=mavieavelo@gmail.com", "title":"Ma vie à vélo","address1":"197 Rue Moliere","address2":"60280 Margny-lès-Compiègne, France","coords":{"lat":49.423396472355186,"lng":2.8236029355819703},"placeId":"ChIJFXTQN4_W50cRkfjLgBEVZas"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycles Baie&utm_content=cyclesbaie@gmail.com", "title":"Cycles Baie","address1":"33 Route du Crotoy","address2":"80120 Rue, France","coords":{"lat":50.26624217429722,"lng":1.6671442355819677},"placeId":"ChIJ7f1Febjo3UcRcAQ6rHp-RA4"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Dream Bikes&utm_content=dreambikes62@gmail.com", "title":"Dream Bikes","address1":"89 Avenue de la Forêt","address2":"62360 La Capelle-lès-Boulogne, France","coords":{"lat":50.73426408094859,"lng":1.6970426644180447},"placeId":"ChIJHXxCcz4y3EcRrqHCZKmtCzk"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycles Fab&utm_content=cyclesfabienpochet@orange.fr", "title":"Cycles Fab","address1":"239 Rue du Château d'Eau","address2":"62370 Audruicq, France","coords":{"lat":50.872073327091876,"lng":2.067836312828062},"placeId":"ChIJK5unfClb3EcRfJdVh6yn2o8"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Exceller Bikes&utm_content=ride@excellerbikes.be", "title":"Exceller Bikes","address1":"Philipstockstraat 43","address2":"8000 Brugge, Belgique","coords":{"lat":51.209767559837005,"lng":3.2271072294477587},"placeId":"ChIJrflnvs9Qw0cRfTpiiLehMVg"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Pro Cycle&utm_content=procycle60@orange.fr", "title":"Pro Cycle","address1":"138 Rue de Saint-Just des Marais","address2":"60000 Beauvais, France","coords":{"lat":49.43440007635163,"lng":2.0668822196260583},"placeId":"ChIJsXvOSrEG50cR6-q6aPoN0fM"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Le Lion à Vélo&utm_content=contact@nlservices.fr", "title":"Le Lion à Vélo","address1":"1 Rue des Dominicains","address2":"62000 Arras, France","coords":{"lat":50.29104576586822,"lng":2.780621982191658},"placeId":"ChIJYSSzd3RI3UcR0t4ohA73Kg0"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Velorepar&utm_content=contact@velorepar.fr", "title":"Velorepar","address1":"228 Rue Lecourbe","address2":"75015 Paris, France","coords":{"lat":48.83977979318813,"lng":2.293363564418045},"placeId":"ChIJqZyjfBRw5kcRx-4NNDfSQbQ"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Pera Cycles&utm_content=cyclesportpera@orange.fr", "title":"Pera Cycles","address1":"228 Boulevard Nostradamus","address2":"13300 Salon-de-Provence, France","coords":{"lat":43.564294256467434,"lng":3.894496541104524},"placeId":"EiRSdGUgZGUgUGFsYXZhcywgMzQ5NzAgTGF0dGVzLCBGcmFuY2UiLiosChQKEgnVFBLXGrC2EhHm2KjmLu0IJhIUChIJ6TQFgwOwthIRAMdqFiGIBwQ"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Vélo Sport 34&utm_content=velo.sport34@orange.fr", "title":"Vélo Sport 34","address1":"Route de Palavas","address2":"34970 Lattes, France","coords":{"lat":43.64260468200878,"lng":5.094307172387325},"placeId":"ChIJ-VusSKz_yRIRuOeZmY5R-nE"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycles Rebour&utm_content=cycles-rebour@wanadoo.fr", "title":"Cycles Rebour","address1":"41 Rue Emile Jamais","address2":"30900 Nîmes, France","coords":{"lat":43.834609943728864,"lng":4.3518056545963235},"placeId":"ChIJcYN6fKYttBIRDZXR7tDbCb4"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycles Remi Royer&utm_content=sarl-royer.remi@wanadoo.fr","title":"Cycles Remi Royer","address1":"14 Rue Eugène Mercier","address2":"51200 Épernay, France","coords":{"lat":49.0425608708931,"lng":3.9555834362110343},"placeId":"ChIJT7tjRU5r6UcRA0kZhfuHpQc"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycles P Garufi&utm_content=cyclesgarufi@garufi.ch","title":"Cycles P. Garufi","address1":"16 Rue des Charmilles","address2":"1203 Genève, Suisse","coords":{"lat":46.206544924982374,"lng":6.130560724536913},"placeId":"ChIJCzlTINBkjEcRD_814mtHLNA"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Want You Bike&utm_content=xavier@wantyoubike.com","title":"Want You Bike","address1":"24 Quai des Vicinaux","address2":"7500 Tournai, Belgique","coords":{"lat":50.61773249152276,"lng":3.38039577112923},"placeId":"ChIJYapGiuTfwkcRBaocFSpJO5k"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Knokke Sea Bike&utm_content=info@knokkesea-bike.be","title":"Knokke Sea Bike","address1":"Edward Verheyestraat 51","address2":"8300 Knokke-Heist, Belgique","coords":{"lat":51.33826801774827,"lng":3.289898508598328},"placeId":"ChIJgYLBB9KnxEcRcloEEjnYlhU"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Bike World&utm_content=knokke-heist@bikeworld.be","title":"Bike World","address1":"Nicolas Mengélaan 7","address2":"8301 Knokke-Heist, Belgique","coords":{"lat":51.34011170186129,"lng":3.2390414815799673},"placeId":"ChIJ4110QVeoxEcRWLsMO4VQhnY"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycles Henrard&utm_content=info@cycleshenrard.be","title":"Cycles Henrard","address1":"Route d'Aubel 69A","address2":"4890 Thimister-Clermont, Belgique","coords":{"lat":50.679952331639434,"lng":5.849953150926215},"placeId":"ChIJneXKDp-NwEcRyoTWSKbV6Ls"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Ange ou Démon électrique&utm_content=angeoudemon.electrique@gmail.com","title":"Ange ou Démon électrique","address1":"29 Grand Place","address2":"62120 Aire-sur-la-Lys, France","coords":{"lat":50.63811232202918,"lng":2.394413576686474},"placeId":"ChIJG8ek7JMC3UcRYvUFM5_1AaY"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Le Repère&utm_content=olivier.rouliat@gmail.com","title":"Le Repère","address1":"69 Avenue du Mail","address2":"59210 Coudekerque-Branche, France","coords":{"lat":51.021583248734444,"lng":2.3682103177909886},"placeId":"ChIJWeLCnISM3EcR4A3MntmfhC4"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Hossegor Bike location&utm_content=contact@hossegorbike.com","title":"Hossegor Bike location","address1":"340 Avenue du Touring Club","address2":"40150 Soorts-Hossegor, France","coords":{"lat":43.65730721894165,"lng":-1.428936617790988},"placeId":"ChIJJZHL_21bUQ0RZMmTuyXaH2I"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Bike for You&utm_content=dominiquedutertre@hotmail.com","title":"Bike for You","address1":"33 Boulevard Daloz","address2":"62520 Le Touquet-Paris-Plage, France","coords":{"lat":50.52253911126682,"lng":1.587983635581951},"placeId":"ChIJ9UIm77_Q3UcR3pRPbnByNMY"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Urban Tri Sports Spa&utm_content=info@utsspa.be","title":"Urban Tri Sports Spa","address1":"8 Boulevard des Anglais","address2":"4900 Spa, Belgique","coords":{"lat":50.492088912761076,"lng":5.869186453372941},"placeId":"ChIJIzFWbS1iwEcRD4Z7mHV_TJo"},
+      {"booking": "https://calendly.com/fyc_elephantpark/voltaire-demo-ride","title":"Fix Your Cycle","address1":"Elephant Stores Elephant Park, New Lion Wy.","address2":"London SE17 1GQ, Royaume-Uni","coords":{"lat":51.49362101036504,"lng":-0.09626050980433787},"placeId":"ChIJSUIBmpYFdkgRLlNP_NLMrcM"},
+      {"booking": "https://calendly.com/fyc_wembleypark/voltaire-demo-ride","title":"Fix Your Cycle","address1":"5 Weaver Walk, Wembley Park","address2":"Wembley HA9 8TS, Royaume-Uni","coords":{"lat":51.55968512116502,"lng":-0.28080106319465337},"placeId":"EjA1IFdlYXZlciBXYWxrLCBXZW1ibGV5IFBhcmssIFdlbWJsZXkgSEE5IDhUUywgVUsiMBIuChQKEgn9DQdOfhF2SBG8HwVsXkpvYRAFKhQKEglZcL-yfxF2SBHjCQ4sOmFNtQ"},  
+      {"booking": "https://calendly.com/fyc_whitecity/voltaire-demo-ride","title":"Fix Your Cycle","address1":"Unit 7, Mediaworks White City Place, 191 Wood Lane","address2":"London W12 7FP, Royaume-Uni","coords":{"lat":51.51334412371938,"lng":-0.22734679993058116},"placeId":"ChIJfZPiatYPdkgRDg6qgjdVrCg"},  
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycles Henrard&utm_content=info@cycleshenrard.be","title":"Cycles Henrard","address1":"69A Route d'Aubel","address2":"4890 Thimister-Clermont, Belgique","coords":{"lat":50.67548345063051,"lng":5.84574409753591},"placeId":"EihSdGUgZCdBdWJlbCwgVGhpbWlzdGVyLUNsZXJtb250LCBCZWxnaXVtIi4qLAoUChIJiZ2WiaCNwEcRb_Ls6HvyT40SFAoSCZPKmp81jMBHETndWP-boC_d"},  
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=2&3 Roues Elec&utm_content=pm23roueselec@gmail.com","title":"2&3 Roues Elec","address1":"148 Boulevard du Montparnasse","address2":"75014 Paris, France","coords":{"lat":48.84035625201873,"lng":2.3337130294477415},"placeId":"ChIJ1dlgacZx5kcRTEhdP-tL1NM"},  
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=E-bike Premium&utm_content=contact@ebikepremium.com","title":"E-bike Premium","address1":"13 Boulevard Ledru Rollin","address2":"34000 Montpellier, France","coords":{"lat":43.60891902895384,"lng":3.8731059294477266},"placeId":"ChIJCfo4s6mvthIRR-NOfSUnF-w"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=ABT BVBA&utm_content=abtbvba@telenet.be","title":"ABT BVBA","address1":"Begijnenstraat 156","address2":"9100 Sint-Niklaas, Belgique","coords":{"lat":51.176966356604815,"lng":4.149271492659756},"placeId":"ChIJvUr4saWOw0cRuPu4--iDNk0"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Barholt Distribution ApS&utm_content=info@barholtdistribution.dk","title":"Barholt Cykler","address1":"Østerbrogade 138","address2":"2100 København, Danemark","coords":{"lat":55.70689820913473,"lng":12.577698297518548},"placeId":"ChIJmdrLHvFSUkYRlYkjlgjbJH8"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Daily vélo&utm_content=contact.pro@dailyvelo.com","title":"Daily vélo","address1":"10 Rue Robert Giraudineau","address2":"94300 Vincennes, France","coords":{"lat":48.84575203486932,"lng":2.435307058895475},"placeId":"ChIJlUna66Jy5kcRo6XbEyb--oQ"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Velo velo&utm_content=contact@velo-velo.fr","title":"Velo Velo","address1":"41 Rue de Lyon","address2":"75012 Paris, France","coords":{"lat":48.848788382511856,"lng":2.3707392705522734},"placeId":"ChIJ-Zs7mANy5kcR9CrCASVvW-4"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=CityzenBike&utm_content=pro@cityzen-bike.com","title":"CityZenBike","address1":"4 Rue du Faubourg-de-Saverne","address2":"67000 Strasbourg, France","coords":{"lat":48.58503831732542,"lng":7.740914003075812},"placeId":"ChIJ53pIV0nIlkcRO0_gXndz-qs"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Ergo'Velo&utm_content=fred.jacquemin@ergovelo.com","title":"Ergo'Velo","address1":"465 Rue de la Fougrie","address2":"88460 Le Roulier, France","coords":{"lat":48.16828923337517,"lng":6.6155748355819854},"placeId":"ChIJvahV-iejk0cR8iOHRLdklNU"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Spring Bikes&utm_content=thomas@spring-bikes.com","title":"Spring Bikes","address1":"Passeig de Lluís Companys, 10","address2":"08018 Barcelona, Espagne","coords":{"lat":41.389843949076734,"lng":2.1830183588954766},"placeId":"EjZQYXNzZWlnIGRlIExsdcOtcyBDb21wYW55cywgMTAsIDA4MDE4IEJhcmNlbG9uYSwgU3BhaW4iMBIuChQKEgnLOLM5_aKkEhER35ZqX2UiDhAKKhQKEgkv1jLW_KKkEhESVfPbAUQ7ww"},  
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Granny Gears&utm_content=info@grannygears.be","title":"Granny Gears","address1":"Langestraat 20","address2":"8370 Blankenberge, Belgique","coords":{"lat":51.314539400000015,"lng":3.127456735581977},"placeId":"ChIJLUL6PX2qxEcRuK_7BEBuPjw"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=NoShoes Le Crotoy&utm_content=damien@noshoes.fr","title":"Noshoes Le Crotoy","address1":"17 Rue de la Porte du Pont","address2":"80550 Le Crotoy, France","coords":{"lat":50.21530406543059,"lng":1.62615463558196},"placeId":"ChIJ24aHrp3l3UcR8wUjb7RJTQI"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=NoShoes Montreuil-sur-mer&utm_content=damien@noshoes.fr","title":"Noshoes Montreuil-sur-mer","address1":"31 Place du Général de Gaulle","address2":"62170 Montreuil-sur-Mer, France","coords":{"lat":50.46152212993755,"lng":1.759453235581958},"placeId":"ChIJIWIa4HzG3UcRmHJVF-eN_lA"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Meca Bike&utm_content=hello@mecabike.be","title":"Meca Bike","address1":"Gare Maritime, Rue Picard 11/201","address2":"1000 Bruxelles, Belgique","coords":{"lat":50.864124256743196,"lng":4.344925835581961},"placeId":"ChIJGUp0QdvDw0cRjiKmiP5pZD8"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Coffea Diversa&utm_content=aveloso@ingredientscafe.es","title":"Coffea Diversa","address1":"Calle del Notariat, 7","address2":"08001 Barcelona, Espagne","coords":{"lat":41.38298995007576,"lng":2.168995864418024},"placeId":"ChIJU8eHzvWipBIR133zBID8k_M"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Nccycles&utm_content=christophe.defosse80@gmail.com","title":"Nccycles","address1":"14 Rue des Teinturiers","address2":"80100 Abbeville, France","coords":{"lat":50.10846531723481,"lng":1.8318458772808244},"placeId":"ChIJe9i238eM3UcR836LPtsstlI"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Audise Bicycles&utm_content=info@audisebicycles.be","title":"Audise Bicycles","address1":"390 Chaussée de Huy","address2":"1325 Chaumont-Gistoux, Belgique","coords":{"lat":50.66914710000002,"lng":4.72967686441804},"placeId":"ChIJ_6tfKtV7wUcRoOdnQS-PzYk"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=La Maison du Vélo&utm_content=lamaisonduvelo67@gmail.com","title":"La Maison du Vélo","address1":"18 Rue Jacques Peirotes","address2":"67000 Strasbourg, France","coords":{"lat":48.576520498404435,"lng":7.754459293254108},"placeId":"ChIJefFGAavJlkcR3CnTw69Glqo"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Adrian's Bike&utm_content=adrians.bike.nivelles@gmail.com","title":"Andrian's Bike","address1":"2 Faubourg de Soignies","address2":"1400 Nivelles, Belgique","coords":{"lat":50.59727195674383,"lng":4.318808907969278},"placeId":"ChIJb2wpjyozwkcRbNN9ZOCIJNQ"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cyclo Planet&utm_content=contact@cycloplanet.com", "title":"Cyclo Planet Aix","address1":"33 Avenue Sainte-Victoire","address2":"13100 Aix-en-Provence, France","coords":{"lat":43.53212466970237,"lng":5.454063537434393},"placeId":"ChIJSUESKbmNyRIRxTu9lUt-dAY"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Reine et biclou&utm_content=herve@nsns.fr", "title":"Reine et Biclou","address1":"49 Rue de Mons","address2":"59300 Valenciennes, France","coords":{"lat":50.36024925544937,"lng":3.5289057466270313},"placeId":"ChIJ45D6Q-rtwkcRo7ohOLt-ACg"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Vélo Station Amiens&utm_content=80amiens@velostation.com", "title":"Vélo Station","address1":"26 Rue Sire Firmin Leroux","address2":"80000 Amiens, France","coords":{"lat":49.89336842791168,"lng":2.299518158895504},"placeId":"ChIJd-HfX0eE50cRBlU_rbd3BS8"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycleo&utm_content=info@cycleo.be", "title":"Cycleo","address1":"Rue de la Paix","address2":"4671 Blégny, Belgique","coords":{"lat":50.66703890021514,"lng":5.690088835581957},"placeId":"EiVSdWUgZGUgbGEgUGFpeCwgNDY3MSBCbMOpZ255LCBCZWxnaXVtIi4qLAoUChIJbzT-c4DxwEcRKEXkHxzJYx4SFAoSCdcxIrDf8sBHESl2wy-erSgx"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Saitta cycles Spy&utm_content=spy@saitta.be", "title":"Saitta Cycles Spy","address1":"44 Route de Saussin","address2":"5190 Jemeppe-sur-Sambre, Belgique","coords":{"lat":50.493050712691634,"lng":4.723205917790985},"placeId":"ChIJww_P95iEwUcR4CmCDDMlphM"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Saitta cycles Namur&utm_content=namur@saitta.be", "title":"Saitta Cycles Namur","address1":"3D Avenue de la Plante","address2":"5000 Namur, Belgique","coords":{"lat":50.45865539241227,"lng":4.864428458895493},"placeId":"ChIJT2WjinOZwUcRLXRwnIOav6Q"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Atelier vélo 44&utm_content=ateliervelo44@gmail.com", "title":"Atelier vélo 44","address1":"50 Avenue du Président Roosevelt","address2":"44250 Saint-Brevin-les-Pins, France","coords":{"lat":47.22921300000001,"lng":-2.174440673610696},"placeId":"ChIJBzzESkpuBUgRYn_2MDDifT8"},      
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Doctocycles&utm_content=bertrand@doctocycles.fr", "title":"Doctocycles","address1":"24 Rue Marcel Sembat","address2":"56100 Lorient, France","coords":{"lat":47.74953069655545,"lng":-3.375530311656756},"placeId":"ChIJtfAg7atfEEgR2_AMdi7E5bc"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=O2Town / FIXIE Barcelona&utm_content=dmartifex@gmail.com", "title":"Fixie Barcelona","address1":"Passatge de Maiol, 8","address2":"08013 Barcelona, Espagne","coords":{"lat":41.40190185208514,"lng":2.1745938294650946},"placeId":"EixQYXNzYXRnZSBkZSBNYWlvbCwgOCwgMDgwMTMgQmFyY2Vsb25hLCBTcGFpbiIwEi4KFAoSCRfDGbXCoqQSEZUj5isFcqV1EAgqFAoSCTPKGbXCoqQSERtAUGuLEx5n"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Chacun son vélo&utm_content=chacunsonvelo02@gmail.com", "title":"Chacun son vélo","address1":"38 Rue Pasteur","address2":"02300 Chauny, France","coords":{"lat":49.617032824428634,"lng":3.220786176686463},"placeId":"ChIJK7vsIR1r6EcR7Icpbg8u9ZI"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Ox6gene - Saint Laurent Du Var&utm_content=jsg@ox6gene.fr", "title":"Ox6gene","address1":"217 Avenue Eugène Donadeï","address2":"06700 Saint-Laurent-du-Var, France","coords":{"lat":43.658973159524635,"lng":7.193589488343219},"placeId":"ChIJFfMO-EHRzRIRYgAEgdKzS3I"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Fun and Classic Motors&utm_content=funandclassicmotors@gmail.com", "title":"Fun and Classic Motors","address1":"Rue du Canal","address2":"17340 Châtelaillon-Plage, France","coords":{"lat":46.09287845396249,"lng":-1.0966094834671014},"placeId":"Ei9SdWUgZHUgQ2FuYWwsIDE3MzQwIENow6J0ZWxhaWxsb24tUGxhZ2UsIEZyYW5jZSIuKiwKFAoSCSnm-sMrTgFIES4uuvI-6dtOEhQKEgk74WRhv08BSBHgou5gktMFBA"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Avelo Auray&utm_content=locavelo.bzh@gmail.com", "title":"Avelo Auray","address1":"26 Place de la République","address2":"56400 Auray, France","coords":{"lat":47.66663400631524,"lng":-2.983404023313523},"placeId":"ChIJs5FtPT4UEEgRNGSI-uNgsfQ"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=TEMPO - Le repaire cycliste&utm_content=contact@tempoclermont.bike", "title":"TEMPO - Le repaire cycliste","address1":"17 Rue de la Treille","address2":"63000 Clermont-Ferrand, France","coords":{"lat":45.77689179392321,"lng":3.0864309294477588},"placeId":"ChIJ03ibeOgb90cRqyyfh-oKVAk"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Bike Evasion Le Pouliguen&utm_content=info@bikevasion.fr", "title":"Bike Evasion Le Pouliguen","address1":"9 Rue Général Leclerc","address2":"44510 Le Pouliguen, France","coords":{"lat":47.27823519014267,"lng":-2.428939270552255},"placeId":"ChIJtaD9sUdbBUgR3Bkp_O0PD9Y"},      
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Cycles Zawoda&utm_content=cycles.zawoda@gmail.com", "title":"Cycles ZAWODA","address1":"47 Rue Léon Gambetta","address2":"59950 Auby, France","coords":{"lat":50.412392545371326,"lng":3.05171122944774},"placeId":"ChIJX8rV7j_MwkcRmhUz9EYRLkM"},      
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Las Bicis Naranjas&utm_content=lasbicisnaranjas@gmail.com", "title":"Las Bicis Naranjas","address1":"Calle Sagasta, 9","address2":"11001 Cádiz, Espagne","coords":{"lat":36.533793943097926,"lng":-6.297462836193657},"placeId":"EiJDLiBTYWdhc3RhLCA5LCAxMTAwMSBDw6FkaXosIFNwYWluIjASLgoUChIJ9Z1fFWHRDQ0RsJBS79YAY3MQCSoUChIJ1WOxTGDRDQ0Riv7NZxsGkKI"},
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=BIKE 76&utm_content=location@trott76.com", "title":"Bike 76","address1":"68 Quai Lamblardie","address2":"76600 Le Havre, France","coords":{"lat":49.48955388836461,"lng":0.1140888294477449},"placeId":"Eio2OCBRdWFpIExhbWJsYXJkaWUsIDc2NjAwIExlIEhhdnJlLCBGcmFuY2UiMBIuChQKEgk9jMdiHi_gRxE4e-slpfp9hRBEKhQKEgkBaQpfHi_gRxHQrclMX1jhXw"},      
+      {"booking": "https://ddtga3zdoaj.typeform.com/essai-voltaire?utm_source=Pétrolette et Solexine Castres&utm_content=eric.fedevieille81@gmail.com", "title":"Pétrolette et Moto Vintage","address1":"48 Avenue de Lavaur","address2":"81100 Castres, France","coords":{"lat":43.60774093611701,"lng":2.234414301835046},"placeId":"ChIJ__97POURrhIROvN0Y4AZmKE"}
+    ]
+  };
+
+  function initMap() {
+    new LocatorPlus(CONFIGURATION);
+  }
+</script>
+<script id="locator-result-items-tmpl" type="text/x-handlebars-template">
+  {% raw %}
+  {{#each locations}}
+    <li class="location-result" data-location-index="{{index}}">
+      <button class="select-location">
+        <h2 class="name">{{title}}</h2>
+      </button>
+      <div class="address">{{address1}}<br>{{address2}}</div>
+  <div class="btnContainer">
+      <div class="options">
+          <a class="details-button btnMapAction">
+            Details
+          </a>
+        </div>
+      </div>
+</div>
+      {{#if travelDistanceText}}
+        <div class="distance">{{travelDistanceText}}</div>
+      {{/if}}
+      <a class="directions-button" href="" target="_blank" title="Get directions to this location on Google Maps">
+        <svg width="34" height="34" viewBox="0 0 34 34"
+              fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.5867 9.24375L17.9403 8.8902V8.8902L17.5867 9.24375ZM16.4117 9.24375L16.7653 9.59731L16.7675 9.59502L16.4117 9.24375ZM8.91172 16.7437L8.55817 16.3902L8.91172 16.7437ZM8.91172 17.9229L8.55817 18.2765L8.55826 18.2766L8.91172 17.9229ZM16.4117 25.4187H16.9117V25.2116L16.7652 25.0651L16.4117 25.4187ZM16.4117 25.4229H15.9117V25.63L16.0582 25.7765L16.4117 25.4229ZM25.0909 17.9229L25.4444 18.2765L25.4467 18.2742L25.0909 17.9229ZM25.4403 16.3902L17.9403 8.8902L17.2332 9.5973L24.7332 17.0973L25.4403 16.3902ZM17.9403 8.8902C17.4213 8.3712 16.5737 8.3679 16.0559 8.89248L16.7675 9.59502C16.8914 9.4696 17.1022 9.4663 17.2332 9.5973L17.9403 8.8902ZM16.0582 8.8902L8.55817 16.3902L9.26527 17.0973L16.7653 9.5973L16.0582 8.8902ZM8.55817 16.3902C8.0379 16.9105 8.0379 17.7562 8.55817 18.2765L9.26527 17.5694C9.13553 17.4396 9.13553 17.227 9.26527 17.0973L8.55817 16.3902ZM8.55826 18.2766L16.0583 25.7724L16.7652 25.0651L9.26517 17.5693L8.55826 18.2766ZM15.9117 25.4187V25.4229H16.9117V25.4187H15.9117ZM16.0582 25.7765C16.5784 26.2967 17.4242 26.2967 17.9444 25.7765L17.2373 25.0694C17.1076 25.1991 16.895 25.1991 16.7653 25.0694L16.0582 25.7765ZM17.9444 25.7765L25.4444 18.2765L24.7373 17.5694L17.2373 25.0694L17.9444 25.7765ZM25.4467 18.2742C25.9631 17.7512 25.9663 16.9096 25.438 16.3879L24.7354 17.0995C24.8655 17.2279 24.8687 17.4363 24.7351 17.5716L25.4467 18.2742Z" fill="#26382F"/>
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M19 19.8333V17.75H15.6667V20.25H14V16.9167C14 16.4542 14.3708 16.0833 14.8333 16.0833H19V14L21.9167 16.9167L19 19.8333Z" fill="#26382F"/>
+          <circle class="directions-button-background" cx="17" cy="17" r="16.5" stroke="#26382F"/>
+        </svg>
+      </a>
+    </li>
+  {{/each}}
+  {% endraw %}
+</script>
+<script id="locator-details-tmpl" type="text/x-handlebars-template">
+  {% raw %}
+  <button class="back-button">
+    <img class="icon" src="https://fonts.gstatic.com/s/i/googlematerialicons/arrow_back/v11/24px.svg" alt=""/>
+    Retour
+  </button>
+  <header>
+    <div class="banner">
+      <svg width="23" height="32" viewBox="0 0 23 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M22.9976 11.5003C22.9976 13.2137 22.7083 14.9123 21.8025 16.7056C18.6321 22.9832 12.7449 24.3314 12.2758 30.7085C12.2448 31.1294 11.9286 31.4744 11.4973 31.4744C11.0689 31.4744 10.7527 31.1294 10.7218 30.7085C10.2527 24.3314 4.3655 22.9832 1.19504 16.7056C0.289306 14.9123 0 13.2137 0 11.5003C0 5.13275 5.14557 0 11.5003 0C17.852 0 22.9976 5.13275 22.9976 11.5003Z" fill="#4285F4"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" transform="translate(5.5,5.5)" d="M6 8.84091L9.708 11L8.724 6.92961L12 4.19158L7.6856 3.83881L6 0L4.3144 3.83881L0 4.19158L3.276 6.92961L2.292 11L6 8.84091Z" fill="#FBE15C"/>
+      </svg>
+    </div>
+    <h2>{{location.title}}</h2>
+  </header>
+  {{#if location.travelDistanceText}}
+    <div class="distance">{{location.travelDistanceText}} away</div>
+  {{/if}}
+  <div class="address">
+    {{location.address1}}<br>
+    {{location.address2}}
+  </div>
+  <div class="atmosphere">
+    {{#if place.rating}}
+      <span class="star-rating-numeric">{{place.rating}}</span>
+      <span>
+        {{#each place.fullStarIcons}}
+          <img src="https://fonts.gstatic.com/s/i/googlematerialicons/star/v15/24px.svg"
+               alt="" class="star-icon"/>
+        {{/each}}
+        {{#each place.halfStarIcons}}
+          <img src="https://fonts.gstatic.com/s/i/googlematerialicons/star_half/v17/24px.svg"
+               alt="" class="star-icon"/>
+        {{/each}}
+        {{#each place.emptyStarIcons}}
+          <img src="https://fonts.gstatic.com/s/i/googlematerialicons/star_outline/v9/24px.svg"
+               alt="" class="star-icon"/>
+        {{/each}}
+      </span>
+    {{/if}}
+    {{#if place.user_ratings_total}}
+      <a href="{{place.url}}" target="_blank">{{place.user_ratings_total}} avis</a>
+    {{else}}
+      <a href="{{place.url}}" target="_blank">See on Google Maps</a>
+    {{/if}}
+    {{#if place.price_level}}
+      &bull;
+      <span class="price-dollars">
+        {{#each place.dollarSigns}}${{/each}}
+      </span>
+    {{/if}}
+  </div>
+  <hr/>
+  {{#if place.opening_hours}}
+    <div class="hours contact">
+      <img src="https://fonts.gstatic.com/s/i/googlematerialicons/schedule/v12/24px.svg"
+           alt="Opening hours" class="icon"/>
+      <div class="right">
+        {{#each place.openingHoursSummary}}
+          <div>
+            <span class="weekday">{{days}}</span>
+            <span class="hours">{{hours}}</span>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  {{/if}}
+  {{#if place.website}}
+    <div class="website contact">
+      <img src="https://fonts.gstatic.com/s/i/googlematerialicons/public/v10/24px.svg"
+           alt="Website" class="icon"/>
+      <div class="right">
+        <a href="{{place.website}}" target="_blank">{{place.websiteDomain}}</a>
+      </div>
+    </div>
+  {{/if}}
+  {{#if place.formatted_phone_number}}
+    <div class="phone contact">
+      <img src="https://fonts.gstatic.com/s/i/googlematerialicons/phone/v10/24px.svg"
+           alt="Phone number" class="icon"/>
+      <div class="right">
+        {{place.formatted_phone_number}}
+      </div>
+    </div>
+  {{/if}}
+  {{#if place.html_attributions}}
+    {{#each place.html_attributions}}
+      <p class="attribution">{{{this}}}</p>
+    {{/each}}
+  {{/if}}
+  {% endraw %}
+</script>
+<section id="avis200223">
+  <h6 class="header-title">Nos partenaires</h6>
+  <h1 class="header-description">Trouvez une boutique près de chez vous</h1>
+</section>
+<div id="map-container">
+  <div id="locations-panel">
+    <div id="locations-panel-list">
+      <header>
+        <div class="search-input">
+          <input id="location-search-input" placeholder="Adresse ou code postal">
+          <div id="search-overlay-search" class="search-input-overlay search">
+            <button id="location-search-button">
+              <img class="icon" src="https://fonts.gstatic.com/s/i/googlematerialicons/search/v11/24px.svg" alt="Search"/>
+            </button>
+          </div>
+        </div>
+      </header>
+      <div class="section-name" id="location-results-section-name">
+   
+      </div>
+      <div class="results">
+        <ul id="location-results-list"></ul>
+      </div>
+    </div>
+    <div id="locations-panel-details"></div>
+  </div>
+  <div id="gmp-map"></div>
+</div>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCOXnI0zjU-jHXWJaC_36AfrCr8Fdm8Ey4&callback=initMap&libraries=places,geometry&solution_channel=GMP_QB_locatorplus_v6_cABCDE" async defer></script>
+{% schema %}
+  {
+    "name": "Section Map",
+    "settings": [],
+    "presets": [
+      {
+        "name": "Section Map"
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}
