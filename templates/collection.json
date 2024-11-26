@@ -1,1 +1,99 @@
-{"sections":{"6b2f073b-362e-4cf8-8e77-aac3a3df2d3e":{"type":"image-banner","disabled":true,"blocks":{"template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-0":{"type":"heading","settings":{"heading":"Payote x france rugby","heading_size":"h2"}},"template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-1":{"type":"text","disabled":true,"settings":{"text":"Give customers details about the banner image(s) or content on the template.","text_style":"body"}},"template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-2":{"type":"buttons","disabled":true,"settings":{"button_label_1":"Button label","button_link_1":"","button_style_secondary_1":false,"button_label_2":"Button label","button_link_2":"","button_style_secondary_2":false}}},"block_order":["template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-0","template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-1","template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-2"],"settings":{"video":"shopify:\/\/files\/videos\/banniere-france-rugby.mp4","image_overlay_opacity":0,"image_height":"medium","adapt_height_first_image":false,"desktop_content_position":"middle-center","show_text_box":false,"desktop_content_alignment":"center","color_scheme":"background-1","mobile_content_alignment":"center","mobile_content_position":"middle-center","stack_images_on_mobile":true,"show_text_below":true}},"banner":{"type":"main-collection-banner","settings":{"show_collection_banner":true,"show_collection_description":true,"show_collection_image":true,"collection_height":"small","color_scheme":"background-1"}},"product-grid":{"type":"main-collection-product-grid","settings":{"products_per_page":12,"columns_desktop":3,"image_ratio":"square","show_secondary_image":true,"show_vendor":false,"show_rating":true,"enable_quick_add":true,"enable_variations":true,"enable_sale_save":true,"enable_filtering":true,"filter_type":"vertical","enable_sorting":true,"columns_mobile":"2","padding_top":36,"padding_bottom":36}}},"order":["6b2f073b-362e-4cf8-8e77-aac3a3df2d3e","banner","product-grid"]}
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "6b2f073b-362e-4cf8-8e77-aac3a3df2d3e": {
+      "type": "image-banner",
+      "disabled": true,
+      "blocks": {
+        "template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-0": {
+          "type": "heading",
+          "settings": {
+            "heading": "Payote x france rugby",
+            "heading_size": "h2"
+          }
+        },
+        "template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-1": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        },
+        "template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-2": {
+          "type": "buttons",
+          "disabled": true,
+          "settings": {
+            "button_label_1": "Button label",
+            "button_link_1": "",
+            "button_style_secondary_1": false,
+            "button_label_2": "Button label",
+            "button_link_2": "",
+            "button_style_secondary_2": false
+          }
+        }
+      },
+      "block_order": [
+        "template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-0",
+        "template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-1",
+        "template--19078728548682__6b2f073b-362e-4cf8-8e77-aac3a3df2d3e-1688629145527246a6-2"
+      ],
+      "settings": {
+        "image_overlay_opacity": 0,
+        "image_height": "medium",
+        "adapt_height_first_image": false,
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "background-1",
+        "mobile_content_alignment": "center",
+        "mobile_content_position": "middle-center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
+    "banner": {
+      "type": "main-collection-banner",
+      "settings": {
+        "show_collection_banner": true,
+        "show_collection_description": true,
+        "show_collection_image": true,
+        "collection_height": "small",
+        "color_scheme": "background-1"
+      }
+    },
+    "product-grid": {
+      "type": "main-collection-product-grid",
+      "settings": {
+        "products_per_page": 12,
+        "columns_desktop": 3,
+        "image_ratio": "square",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "enable_quick_add": true,
+        "enable_variations": true,
+        "enable_sale_save": true,
+        "enable_filtering": true,
+        "filter_type": "vertical",
+        "enable_sorting": true,
+        "columns_mobile": "2",
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    }
+  },
+  "order": [
+    "6b2f073b-362e-4cf8-8e77-aac3a3df2d3e",
+    "banner",
+    "product-grid"
+  ]
+}
