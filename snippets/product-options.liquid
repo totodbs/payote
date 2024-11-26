@@ -19,12 +19,9 @@
   }
   </style>
   {% if product.id == "9561526763850" %}
-<style>
-  select[name="product_options_properties[Couleur du fil]"] option[value="Orange"] {
-    display: none;
-  }
-</style>
-
+<script>
+  document.querySelector('select[name="product_options_properties[Couleur du fil]"] option[value="Orange"]').disabled = true;
+    </script>
     {% endif %}
 <script
   src="https://code.jquery.com/jquery-2.2.4.min.js"
