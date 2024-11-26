@@ -18,6 +18,7 @@
         width: 100%;
   }
   </style>
+
 <script
   src="https://code.jquery.com/jquery-2.2.4.min.js"
   integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
@@ -216,24 +217,19 @@
                 {%- endif -%}
                 <p>Pour les espadrilles personnalisées, il faut ajouter 7 jours ouvrés supplémentaires à la date de livraison estimée.</p>
               
-{%- if settings.broderie_colors != blank -%}
+              {%- if settings.broderie_colors != blank -%}
   <label style="margin-top: 15px;" class="product-option__label">
     <span class="caption-with-space uppercase h5">Couleur du fil</span>
   </label>
   {% assign bcolors = settings.broderie_colors | split: ',' %}
   <select class="pplr_select" name="product_options_properties[Couleur du fil]">
     {% for color in bcolors %}
-      {% if product.id == 9561526763850 %}
-        {% unless color == "Orange" %}
-          <option value="{{ color }}">{{ color }}</option>
-        {% endunless %}
-      {% else %}
+      {% unless color == "Orange" %}
         <option value="{{ color }}">{{ color }}</option>
-      {% endif %}
+      {% endunless %}
     {% endfor %}
   </select>
 {%- endif -%}
-
 
 
             {% assign binputs = broderie_elements | split: ',' %}
