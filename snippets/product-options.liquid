@@ -221,16 +221,19 @@
                   <span class="caption-with-space uppercase h5">Couleur du fil</span>
                 </label>
                 {% assign bcolors = settings.broderie_colors | split: ',' %}
-               <select class="pplr_select" name="product_options_properties[Couleur du fil]">
+<select class="pplr_select" name="product_options_properties[Couleur du fil]">
   {% for color in bcolors %}
-    {% if product.id == 9561526763850 and color == "Orange" or 
-          product.id == 9384539488586 and color == "Bleu" or 
-          product.id == 9384532738378 and color == "Vert" %}
+    {% if product.id == 9561526763850 and color == "Orange" %}
+      {% continue %}
+    {% elsif product.id == 9384539488586 and color == "Bleu" %}
+      {% continue %}
+    {% elsif product.id == 9384532738378 and color == "Vert" %}
       {% continue %}
     {% endif %}
     <option value="{{ color }}">{{ color }}</option>
   {% endfor %}
 </select>
+
               {%- endif -%}
             </div>
 
