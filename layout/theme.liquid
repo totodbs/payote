@@ -275,8 +275,12 @@
       }
     {% endstyle %}
 
-<link rel="stylesheet" href="{{ 'base.css' | asset_url }}" media="print" onload="this.media='all'">
-<link rel="stylesheet" href="{{ 'fonts.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="preload" href="{{ 'base.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
+<link rel="preload" href="{{ 'fonts.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
+<noscript>
+  <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'fonts.css' | asset_url }}">
+</noscript>
 
 
     {%- unless settings.type_body_font.system? -%}
