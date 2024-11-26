@@ -150,8 +150,8 @@
     "empty_cart_drawer_collection": "espadrilles-femme",
     "empty_cart_drawer_collection_2": "espadrilles-homme",
     "cart_drawer_product": "sac-pochon-cadeau-reutilisable",
-    "cart_drawer_product_2": "chaussettes-chaton-bleues-40-45",
-    "cart_drawer_product_3": "chaussettes-bichette-chinees-36-40",
+    "cart_drawer_product_2": "chaussettes-pour-pecho-vert-40-45",
+    "cart_drawer_product_3": "porte-cles-espadrille-catalane",
     "message_product": "option-message-cadeau",
     "checkout_logo_image": "shopify://shop_images/logotype-payote.webp",
     "checkout_logo_position": "left",
@@ -280,7 +280,7 @@
               "title": "STADE TOULOUSAIN",
               "text": "",
               "link_label": "",
-              "link": "shopify://products/espadrille-stade-toulousain"
+              "link": "shopify://collections/stade-toulousain"
             }
           },
           "cfac279c-5c5a-4dc3-ab77-bb7079363ee1": {
