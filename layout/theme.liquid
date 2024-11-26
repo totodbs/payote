@@ -1,6 +1,20 @@
 <!doctype html>
 <html class="no-js" lang="{{ request.locale.iso_code }}">
   <head>
+    {% comment %}
+      <!-- Just Button -->
+      <script src="https://checkout-button-shopify.vercel.app/just-pay-button.js" type="module"></script>
+      <link href="https://checkout-button-shopify.vercel.app/styles.css" rel="stylesheet" crossorigin>
+      <style>
+        #just-frame-payment {
+          z-index: 9999999999;
+        }
+      </style>
+      <script>
+        {% if customer.email %} const JUST_USER={email:"{{customer.email}}",first_name:"{{customer.first_name}}",last_name:"{{customer.last_name}}",phone:"{{customer.default_address.phone}}",address:{address1:"{{customer.default_address.address1}}",address2:"{{customer.default_address.address2}}",city:"{{customer.default_address.city}}",country_code:"{{customer.default_address.country_code}}",country:"{{customer.default_address.country}}",zip:"{{customer.default_address.zip}}",province:"{{customer.default_address.province}}"}};window.JUST_USER=JUST_USER;{% endif %}
+      </script>
+      <!-- End of Just Button -->
+    {% endcomment %}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
