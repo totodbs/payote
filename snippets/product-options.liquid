@@ -223,11 +223,11 @@
                 {% assign bcolors = settings.broderie_colors | split: ',' %}
 <select class="pplr_select" name="product_options_properties[Couleur du fil]">
   {% for color in bcolors %}
-    {% if product.id == 9384538374474 and color == "Orange" %}
+    {% if product.id == 9384538374474 and color contains "Orange" %}
       {% continue %}
-    {% elsif product.id == 9384539488586 and color == "Bleu" %}
+    {% elsif product.id == 9384539488586 and color contains "Bleu" %}
       {% continue %}
-    {% elsif product.id == 9384532738378 and color == "Vert" %}
+    {% elsif product.id == 9384532738378 and color contains "Vert" %}
       {% continue %}
     {% endif %}
     <option value="{{ color }}">{{ color }}</option>
