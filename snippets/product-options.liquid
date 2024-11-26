@@ -222,13 +222,10 @@
                 </label>
                 {% assign bcolors = settings.broderie_colors | split: ',' %}
                 <select class="pplr_select" name="product_options_properties[Couleur du fil]">
-  {% for color in bcolors %}
-    {% if product.id == 9561526763850 and color == "Orange" %}
-      {% continue %}
-    {% endif %}
-    <option value="{{ color }}">{{ color }}</option>
-  {% endfor %}
-</select>
+                  {% for color in bcolors %}
+                    <option value="{{ color }}">{{ color }}</option>
+                  {% endfor %}
+                </select>
               {%- endif -%}
             </div>
 
