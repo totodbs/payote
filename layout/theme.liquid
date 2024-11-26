@@ -275,13 +275,8 @@
       }
     {% endstyle %}
 
-<link rel="preload" href="{{ 'base.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
-<link rel="preload" href="{{ 'fonts.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
-<noscript>
-  <link rel="stylesheet" href="{{ 'base.css' | asset_url }}">
-  <link rel="stylesheet" href="{{ 'fonts.css' | asset_url }}">
-</noscript>
-
+    {{ 'base.css' | asset_url | stylesheet_tag }}
+    {{ 'fonts.css' | asset_url | stylesheet_tag }}
 
     {%- unless settings.type_body_font.system? -%}
       {% comment %}<link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>{% endcomment %}
