@@ -275,8 +275,9 @@
       }
     {% endstyle %}
 
-    {{ 'base.css' | asset_url | stylesheet_tag }}
-    {{ 'fonts.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" href="{{ 'base.css' | asset_url }}" media="print" onload="this.media='all'">
+<link rel="stylesheet" href="{{ 'fonts.css' | asset_url }}" media="print" onload="this.media='all'">
+
 
     {%- unless settings.type_body_font.system? -%}
       {% comment %}<link rel="preload" as="font" href="{{ settings.type_body_font | font_url }}" type="font/woff2" crossorigin>{% endcomment %}
