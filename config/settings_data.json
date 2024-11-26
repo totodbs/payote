@@ -480,7 +480,7 @@
           "color_scheme": "background-1",
           "logo_width": 120,
           "logo_position": "middle-center",
-          "menu": "main-menu",
+          "menu": "menu-test",
           "custom_menu": "menu-principale-2",
           "show_faq": true,
           "faq_link_page": "foire-aux-questions",
