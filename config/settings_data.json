@@ -176,6 +176,7 @@
           },
           "a51e4b36-807b-4a43-803a-bce2750ccf32": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p><strong>Retours acceptés jusqu'au</strong> 4 janvier 2025*</p>",
               "text_alignment": "center"
@@ -184,7 +185,7 @@
           "announcement_BbhcgM": {
             "type": "announcement",
             "settings": {
-              "text": "",
+              "text": "<p>-20% sur TOUT* le site avec le code \"ESPADAYS24\"</p>",
               "text_alignment": "center"
             }
           }
