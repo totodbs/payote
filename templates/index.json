@@ -15,7 +15,7 @@
         "slide_3kKgQX": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/offre-espadays-payote.webp",
+            "image": "shopify://shop_images/Plan_de_travail_1_copie_2_1_2x-100.jpg",
             "image_mobile": "shopify://shop_images/espadays_story_bleu.webp",
             "heading": "",
             "heading_size": "h1",
@@ -35,6 +35,7 @@
         },
         "slide_LDem3h": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/PMIK3324_545bf215-6f72-4678-b9e6-e3c3837a879e.jpg",
             "image_mobile": "shopify://shop_images/PMIK3600.jpg",
