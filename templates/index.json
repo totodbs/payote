@@ -12,6 +12,27 @@
     "1663958281d52f6b84": {
       "type": "slideshow",
       "blocks": {
+        "slide_3kKgQX": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/offre-espadays-payote.webp",
+            "image_mobile": "shopify://shop_images/espadays_story_bleu.webp",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "https://payote.fr/collections/chaussons-espadrilles-femme",
+            "button_style_secondary": false,
+            "link_on_slide": true,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "background-1",
+            "text_alignment_mobile": "center",
+            "mobile_box_align": "middle-center"
+          }
+        },
         "slide_LDem3h": {
           "type": "slide",
           "settings": {
@@ -35,6 +56,7 @@
         },
         "slide_AytXBT": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/PMIK3930.jpg",
             "image_mobile": "shopify://shop_images/PMIK3703.jpg",
@@ -45,27 +67,6 @@
             "link": "https://payote.fr/collections/chaussons-espadrilles-femme",
             "button_style_secondary": true,
             "link_on_slide": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "background-1",
-            "text_alignment_mobile": "center",
-            "mobile_box_align": "middle-center"
-          }
-        },
-        "slide_3kKgQX": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/offre-espadays-payote.webp",
-            "image_mobile": "shopify://shop_images/espadays_story_bleu.webp",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "https://payote.fr/collections/chaussons-espadrilles-femme",
-            "button_style_secondary": false,
-            "link_on_slide": true,
             "box_align": "middle-center",
             "show_text_box": false,
             "text_alignment": "center",
@@ -275,9 +276,9 @@
         }
       },
       "block_order": [
+        "slide_3kKgQX",
         "slide_LDem3h",
         "slide_AytXBT",
-        "slide_3kKgQX",
         "08500fcf-ad94-48cd-bc3f-a9cdd2fcc7c6",
         "slide_JFbzNL",
         "96f89874-77ef-471f-8eaf-64184e1db556",

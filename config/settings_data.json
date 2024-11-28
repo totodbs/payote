@@ -168,6 +168,7 @@
         "blocks": {
           "b26e6d20-1227-467f-8a55-cb9e787cf92d": {
             "type": "announcement",
+            "disabled": true,
             "settings": {
               "text": "<p><strong>Livraison Offerte en Point Relais </strong>dès 45€</p>",
               "text_alignment": "center"
