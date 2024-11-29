@@ -267,11 +267,11 @@
             "type": "column",
             "settings": {
               "linkwith": "Homme",
-              "image": "shopify://shop_images/chaussons-homme.webp",
-              "title": "RÉCHAUFFEZ-VOUS",
+              "image": "shopify://shop_images/espadays_carre_bleu_f1ed1c16-b7a8-42ed-bfdb-1cb563232878.jpg",
+              "title": "",
               "text": "",
               "link_label": "",
-              "link": "shopify://collections/chaussons-espadrilles-homme"
+              "link": "shopify://collections/chaussons-espadrilles"
             }
           },
           "column_cLe9j8": {
