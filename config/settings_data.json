@@ -144,7 +144,7 @@
     "show_cart_note": true,
     "empty_text": "Vous êtes pieds nus ?",
     "announcement_text": "MERCI BEAUCOUP !",
-    "announce_link": "shopify://collections/chaussons-espadrilles",
+    "announce_link": "shopify://collections/chaussons-made-in-france",
     "color_announce": "#ffffff",
     "background_color_announce": "#003b9a",
     "empty_cart_drawer_collection": "espadrilles-femme",
@@ -271,7 +271,7 @@
               "title": "",
               "text": "",
               "link_label": "",
-              "link": "shopify://collections/chaussons-espadrilles"
+              "link": "shopify://collections/chaussons-made-in-france"
             }
           },
           "column_cLe9j8": {
@@ -405,7 +405,7 @@
               "title": "",
               "text": "",
               "link_label": "",
-              "link": "shopify://collections/chaussons-espadrilles"
+              "link": "shopify://collections/chaussons-made-in-france"
             }
           },
           "column_pRjg6E": {
@@ -750,12 +750,12 @@
         "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
         "disabled": true,
         "settings": {
+          "greeting_message": "👋 Bonjour ! \nNous répondons à vos questions de 9h à 13h et de 14h à 17h du Lundi au Vendredi.",
           "button_color": "#21306b",
           "button_icon": "chat_bubble",
           "button_text": "no_text",
           "button_horizontal_position": "bottom_right",
-          "button_vertical_position": "lowest",
-          "greeting_message": "👋 Bonjour ! \nNous répondons à vos questions de 9h à 13h et de 14h à 17h du Lundi au Vendredi."
+          "button_vertical_position": "lowest"
         }
       },
       "13019466082614940324": {
@@ -775,21 +775,6 @@
         "type": "shopify://apps/forms/blocks/forms/8744a304-fcb1-4347-b211-bb6b4759a76a",
         "disabled": false,
         "settings": {}
-      },
-      "5946647744298494267": {
-        "type": "shopify://apps/wishlist-plus/blocks/wishlist-app-embed/80c3b1fc-3a8f-407e-8367-ffdeebb8b612",
-        "disabled": true,
-        "settings": {}
-      },
-      "17920835415960095625": {
-        "type": "shopify://apps/swatch-king/blocks/variant-swatch-king/0850b1e4-ba30-4a0d-a8f4-f9a939276d7d",
-        "disabled": false,
-        "settings": {
-          "alignment": "left",
-          "swatch_location": "After image",
-          "switch_on_hover": true,
-          "preselect_variant": false
-        }
       }
     }
   },
